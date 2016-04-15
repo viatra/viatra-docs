@@ -1,0 +1,311 @@
+= Viatra batch transformations
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+ifndef::rootdir[:rootdir: ../]
+:imagesdir: {rootdir}
+
+This exercise helps the audience to create a simple batch transformation using the Viatra Transformation API.
+The transformation will transform the hosts and applications in a CPS model to a deployment model.
+The exercise also covers registering a menu command which initializes the transformation.
+
+== Create transformation
+
+* Create Viatra Query project
+** Create Queries:
+*** For source model:
++
+[[app-listing]]
+[source,java]
+----
+import "http://org.eclipse.viatra/model/cps"
+
+pattern hostInstance(hostInstance : HostInstance) {
+    HostInstance(hostInstance);
+}
+
+pattern applicationInstance(
+    appType : ApplicationType,
+    appInstance : ApplicationInstance
+) {
+    HostInstance.applications(_, appInstance);
+    ApplicationType.instances(appType, appInstance);
+}
+----
+
+*** For traceability model:
++
+[[app-listing]]
+[source,java]
+----
+import "http://org.eclipse.viatra/model/deployment"
+import "http://org.eclipse.viatra/model/cps-traceability"
+
+pattern cps2depTrace(
+    cps2dep : CPSToDeployment,
+    trace : CPS2DeplyomentTrace,
+    cpsElement : Identifiable,
+    depElement : DeploymentElement
+) {
+    CPSToDeployment.traces(cps2dep, trace);
+    CPS2DeplyomentTrace.cpsElements(trace, cpsElement);
+    CPS2DeplyomentTrace.deploymentElements(trace, depElement);
+}
+----
+
+* Create transformation class in Xtend
+** Register used APIs as extensions
++
+[[app-listing]]
+[source,java]
+----
+/*
+ * Viatra Query Pattern group
+ */
+val extension CpsXformM2M cpsXformM2M = CpsXformM2M.instance
+
+/*
+ * Model manipulation API
+ */
+val extension IModelManipulations manipulation
+
+/*
+ * EMF metamodels
+ */
+val extension DeploymentPackage depPackage = DeploymentPackage.eINSTANCE
+val extension TraceabilityPackage trPackage = TraceabilityPackage.eINSTANCE
+
+/*
+ * Viatra transformation API
+ */
+val extension BatchTransformationRuleFactory = new BatchTransformationRuleFactory
+val extension BatchTransformation transformation
+val extension BatchTransformationStatements statements
+----
+
+* Constructor will also initialize transformation
+** It assumes that the output and trace models are already created
+** The IModelManipulations implementation is used to make model access replaceable, this way the same transformation may be used for cases where the resource set is transactional
++
+[[app-listing]]
+[source,java]
+----
+val CPSToDeployment cps2dep
+val ViatraQueryEngine engine
+val Resource output
+
+new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
+  this.cps2dep = cps2dep
+  output = cps2dep.deployment.eResource
+  this.engine = engine
+  manipulation = new SimpleModelManipulations(engine)
+  prepare(engine)
+  transformation = BatchTransformation::forEngine(engine)
+  statements = new BatchTransformationStatements(transformation)
+}
+----
+
+* Transformation will remain active until dispose is called
++
+[[app-listing]]
+[source,java]
+----
+def dispose() {
+    transformation.ruleEngine.dispose
+}
+----
+
+* Create a rule to create DeploymentHosts for each HostInstances
+** The `BatchTransformationRuleFactory` extension provides a builder API for rule definition
+** A Viatra query pattern is used as precondition to the rule, which means the rule will be activated each time the given pattern changes allowing to update the output accordingly.
++
+[[app-listing]]
+[source,java]
+----
+val hostRule = createRule(HostInstanceMatcher.querySpecification)
+----
+
+* Specify action to run when the rule fires. It will create the transformed `DeploymentHost` element in the output model as well as a trace element associating the source `HostInstance` and the target `DeploymentHost`:
++
+[[app-listing]]
+[source,java]
+----
+[
+    val cpsHostInstance = it.hostInstance
+    val nodeIp = cpsHostInstance.nodeIp
+    println('''Mapping host with IP: «nodeIp»''')
+
+    /* Create & initialize DeploymentHost in output model**/
+    val depHost = cps2dep.deployment.createChild(deployment_Hosts, deploymentHost) => [
+        set(deploymentHost_Ip, nodeIp)
+    ]
+
+    /* Create trace element in trace model**/
+    cps2dep.createChild(CPSToDeployment_Traces, CPS2DeplyomentTrace) => [
+        addTo(CPS2DeplyomentTrace_CpsElements, cpsHostInstance)
+        addTo(CPS2DeplyomentTrace_DeploymentElements, depHost)
+    ]
+
+    println('''Mapped with IP: «nodeIp»''')
+]
+----
+
+* The rule which create `DeploymentApplication` elements for `ApplicationInstance`s, looks similar. It has to find the `DeploymentHost` created from the `HostInstance` to which the source `ApplicationInstance` is allocated, so it assumes the `hostRule` has already fired:
++
+[[app-listing]]
+[source,java]
+----
+val applicationRule = createRule(ApplicationInstanceMatcher.querySpecification) [
+    val cpsApplicationInstance = it.appInstance
+    val appId = cpsApplicationInstance.id
+    println('''Mapping application with ID: «appId»''')
+
+    /* Find the DeploymentHost created from the HostInstance to which the source ApplicationInstance is allocated */
+    val cpsHostInstance = cpsApplicationInstance.allocatedTo
+    val depHost = engine.cps2depTrace.getAllValuesOfdepElement(null, null, cpsHostInstance).filter(DeploymentHost).head
+    /* Create & initialize DeploymentApplication in this DeploymentHost */
+    val deploymentApplication = depHost.createChild(deploymentHost_Applications, deploymentApplication) => [
+        set(deploymentApplication_Id, appId)
+    ]
+
+    /* Create trace element in trace model */
+    cps2dep.createChild(CPSToDeployment_Traces, CPS2DeplyomentTrace) => [
+        addTo(CPS2DeplyomentTrace_CpsElements, cpsApplicationInstance)
+        addTo(CPS2DeplyomentTrace_DeploymentElements, deploymentApplication)
+    ]
+
+    println('''Mapped application with ID: «appId»''')
+]
+----
+
+* Implement the method which performs the transformation using the rules defined above:
+** Since we are using the batch strategy (the whole model is retransformed), the output & trace model have to be cleared before the rule firings
+** Pay attention to fire the rules in the proper order
++
+[[app-listing]]
+[source,java]
+----
+def execute() {
+    println('''Executing transformation on: Cyber-physical system: «cps2dep.cps.id»''')
+    /* Clear output & trace model for batch transformation**/
+    cps2dep.deployment.hosts.clear
+    cps2dep.traces.clear
+    /* Fire transformation rules**/
+    hostRule.fireAllCurrent
+    applicationRule.fireAllCurrent
+}
+----
+
+== Create a menu command to execute the transformation
+
+* Create UI plugin
+* Add dependencies:
++
+[[app-listing]]
+[source,java]
+----
+org.eclipse.ui,
+com.incquerylabs.course.cps.viatra.batch;bundle-version="0.1.0",
+org.eclipse.viatra.examples.cps.traceability;bundle-version="0.1.0",
+org.eclipse.viatra.query.runtime;bundle-version="1.2.0"
+----
+
+* Create handler implementation:
++
+[[app-listing]]
+[source,java]
+.TransformHandler.java
+----
+public class TransformHandler extends AbstractHandler implements IHandler {
+
+    ViatraQueryEngine engine;
+    CPS2DeploymentBatchViatra transformation;
+
+    @Override
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        IStructuredSelection selection = 
+            (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
+
+        CPSToDeployment tracemodel = 
+            (CPSToDeployment) selection.getFirstElement();
+
+        if (engine == null){
+            try {
+                engine = ViatraQueryEngine.on(
+                            new EMFScope(
+                                tracemodel.eResource().getResourceSet()));
+                transformation = new CPS2DeploymentBatchViatra(tracemodel, 
+                                                                engine);
+            } catch (ViatraQueryException e) {
+                throw new ExecutionException(e.getMessage(), e);
+            }
+        }
+        transformation.execute();
+
+        return null;
+    }
+
+}
+----
+
+* Register handler in the context menu of `CPSToDeployment` elements in `plugin.xml`:
++
+[[app-listing]]
+[source,xml]
+----
+<extension point="org.eclipse.ui.commands">
+    <command 
+        defaultHandler="com.incquerylabs.course.cps.viatra.batch.ui.TransformHandler"
+        id="com.incquerylabs.course.cps.viatra.batch.ui.command"
+        name="Transform">
+    </command>
+</extension>
+<extension point="org.eclipse.ui.menus">
+    <menuContribution allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+        <command commandId="com.incquerylabs.course.cps.viatra.batch.ui.command"
+                style="push">
+            <visibleWhen checkEnabled="false">
+                <with variable="selection">
+                    <count value="1">
+                    </count>
+                    <iterate>
+                        <adapt type="org.eclipse.viatra.examples.cps.traceability.CPSToDeployment">
+                        </adapt>
+                    </iterate>
+                </with>
+            </visibleWhen>
+        </command>
+    </menuContribution>
+</extension>
+----
+
+== Execute the transformation
+
+* Launch runtime eclipse
+* Create a generic resource project
+* Copy a `.cyberphysical` resource in it
++
+image::day3/screenshots/viatraIncr_example1.png[]
+
+* Create a Deployment model
+** Root element shall be _Deployment_
++
+image::day3/screenshots/viatraIncr_example2.png[]
+
+* Create a Traceability model
+** Root element shall be _CPS To Deployment_
++
+image::day3/screenshots/viatraIncr_example3.png[]
+
+* In the Traceability editor, load both CPS and Deployment models with _Load Resources..._ in the context menu
++
+image::day3/screenshots/viatraIncr_example4.png[]
+
+* Set CPS and Deployment references of traceability model in the properties view
++
+image::day3/screenshots/viatraIncr_example5.png[]
+
+* Create a new _HostType_, _HostInstance_, _ApplicationType_ and _ApplicationInstance_ in the Deployment model
+
+* Execute transformation using the created command (on the context menu of the Traceability model root)
++
+image::day3/screenshots/viatraIncr_example6.png[]

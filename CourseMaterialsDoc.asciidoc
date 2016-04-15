@@ -1,0 +1,42 @@
+= Course Materials
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:rootdir: .
+:imagesdir: {rootdir}/images
+:toclevels: 2
+:toc:
+:numbered:
+
+== Day 3
+:chapterdir: day3
+
+include::{chapterdir}/Derived-features.adoc[leveloffset=+2]
+
+<<<
+include::{chapterdir}/Querying-and-transforming-UML-profile-applications.adoc[leveloffset=+2]
+
+<<<
+include::{chapterdir}/Viatra-query-lab.adoc[leveloffset=+2]
+
+<<<
+include::{chapterdir}/Viatra-batch-transformations.adoc[leveloffset=+2]
+
+<<<
+include::{chapterdir}/Viatra-incremental-transformations.adoc[leveloffset=+2]
+
+<<<
+== Extra
+:chapterdir: extra
+
+include::{chapterdir}/Metamodeling-with-UML-profiles.adoc[leveloffset=+2]
+
+<<<
+include::{chapterdir}/VIATRA-debugger.adoc[leveloffset=+2]
+
+<<<
+include::{chapterdir}/VIATRA-EVM-Barebone.adoc[leveloffset=+2]
+
+<<<
+include::{chapterdir}/VIATRA-Query-API.adoc[leveloffset=+2]
+
+<<<
+include::{chapterdir}/VIATRA-visualization.adoc[leveloffset=+2]

@@ -1,0 +1,76 @@
+= Metamodeling with UML profiles
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+ifndef::rootdir[:rootdir: ../]
+:imagesdir: {rootdir}
+
+* Install Eclipse Modeling
+** Help > Install Modeling Components > Papyrus
+* Create profile
+** New > Papyrus Project
+*** Name: com.incquerylabs.course.cps.uml.profile
+*** Diagram Language: Profile
+*** Root model element name: CyberPhysicalSystem
+*** Diagram Kind: Profile Diagram
+** Create Stereotype
+*** Name: ApplicationInstance
+*** When saving, never define the profile
+** Create Import Metaclass
+*** Metaclass: Artifact
+** Create Extension between Stereotype ApplicationInstance and Metaclass Artifact
+** Create Property in Stereotype ApplicationInstance
+*** Name: dbUser
+*** Type: UML Primitive Types > String
+** Under the stereotype's Properties > UML, add Icon
+*** Kind: shape
+*** Location: `platform:/plugin/org.eclipse.ant.ui/icons/full/elcl16/properties.png`
+** Define the profile
+*** Modify the diagram in an arbitrary way, then save and define it
+* Apply profile
+** New > Papyrus Project
+*** Name: com.incquerylabs.course.cps.uml.instance
+*** Diagram Language: UML
+*** Diagram Kind: Deployment Diagram
+*** Profile: browse the newly created profile from the workspace
+** Create Artifact
+** Under the artifact's Properties > Profile, add Applied stereotype ApplicationInstance
+*** Expand stereotype application and set the property values
+** Under Properties > Appearance, select:
+*** Shape Decoration > Visible: true
+*** Stereotype display > ApplicationInstance: In Braces
+* Embed profile in a plug-in and register it to Papyrus
+** Right-click > Configure > Convert to plug-in project
+** Open MANIFEST.MF
+*** Define path mapping
+**** Add extension for point org.eclipse.emf.ecore.uri_mapping
+***** Mapping source: `pathmap://CPS_PROFILE/`
+***** Mapping target: `platform:/plugin/com.incquerylabs.course.cps.uml.profile/`
+*** Register the profile for Papyrus
+***** Add extension for point org.eclipse.papyrus.uml.extensionpoints.UMLProfile (uncheck Show only extension points for required dependencies)
+***** Name: `CyberPhysicalSystem` (arbitrary)
+***** Path: `pathmap://CPS_PROFILE/cps.profile.uml` (path to UML model file with pathmap)
+* Use profile from Papyrus
+** Run new Eclipse Application
+*** New > Papyrus Project
+**** Diagram Language: UML
+**** Browse Registered Profiles should contain registered UML profile
+* Optional: Customize palette
+** Right-click on palette content > Customize...
+*** Add palette
+**** Take note of Advanced > EditorID (org.eclipse.papyrus.uml.diagram.deployment)
+**** Available Tools > select profile CyberPhysicalSystem
+**** Add ApplicationInstance (Artifact)
+** Try it out
+** New > Plug-in Project
+*** Name: com.incquerylabs.course.cps.uml.profile.customization
+*** Uncheck Activator
+** Copy palette definition XML from $WORKSPACE/.metadata/.plugins/org.eclipse.papyrus.uml.diagram.common to $WORKSPACE/com.incquerylabs.course.cps.uml.profile.customization/palettes
+** Open MANIFEST.MF
+*** Add dependencies:
+**** org.eclipse.papyrus.uml.diagram.common
+**** com.incquerylabs.course.cps.uml.profile
+*** Add extension for point org.eclipse.papyrus.uml.diagram.common.paletteDefinition
+**** Path: browse the palette definition XML
+**** Class: org.eclipse.papyrus.uml.diagram.common.service.PluginPaletteProvider
+**** Priority: Medium
+**** Right-click > New > editor
+***** Id: the saved EditorID (org.eclipse.papyrus.uml.diagram.deployment)

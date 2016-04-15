@@ -1,0 +1,376 @@
+= Viatra incremental transformations
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+ifndef::rootdir[:rootdir: ../]
+:imagesdir: {rootdir}
+
+This exercise heps the audience to create a simple incremental transformation using the Viatra Transformation API. The transformation will create (and then incrementally update while active) a deployment model based on a CPS model. The exercise also covers registering a menu command which initializes the transformation.
+
+== Create transformation
+
+* Create Viatra Query project
+** Create Queries:
+*** For source model  
++
+[[app-listing]]
+[source,java]
+----
+pattern hostInstance(hostInstance) {
+    HostInstance(hostInstance);
+}
+
+pattern applicationInstance(appType, appInstance){
+    HostInstance.applications(_, appInstance);
+    ApplicationType.instances(appType, appInstance);
+}
+
+pattern allocatedDeploymentApplication(depHost, depApp) {
+    DeploymentHost.applications(depHost, depApp);
+}
+----
+
+*** For traceability model:
++
+[[app-listing]]
+[source,java]
+----
+pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
+    CPSToDeployment.traces(cps2dep, trace);
+    CPS2DeplyomentTrace.cpsElements(trace, cpsElement);
+    CPS2DeplyomentTrace.deploymentElements(trace, depElement);
+}
+----
+
+* Create transformation class (preferably XTend)
+* Register used APIs as extensions
++
+[[app-listing]]
+[source,java]
+----
+/*
+ * Viatra Query Pattern group
+ */
+val extension CpsXformM2M cpsXformM2M = CpsXformM2M.instance
+
+/*
+ * Model manipulation API
+ */
+val extension IModelManipulations manipulation
+
+/*
+ * EMF metamodels
+ */
+val extension DeploymentPackage depPackage = DeploymentPackage::eINSTANCE
+val extension TraceabilityPackage trPackage = TraceabilityPackage::eINSTANCE
+
+/*
+ * Viatra transformation API
+ */
+val extension EventDrivenTransformationRuleFactory rulefactory = new EventDrivenTransformationRuleFactory
+----
+
+* Constructor will also initialize transformation
+** It assumes that the output and trace models are already created
+** The IModelManipulations implementation is used to make model access replaceable, this way the same transformation may be used for cases where the resource set is transactional
++
+[[app-listing]]
+[source,java]
+----
+val CPSToDeployment cps2dep
+val ViatraQueryEngine engine
+
+EventDrivenTransformation transform
+
+new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
+    this.cps2dep = cps2dep
+    this.engine = engine
+    manipulation = new SimpleModelManipulations(engine)
+    prepare(engine)
+    transform = createTransformation
+}
+----
+
+* Transformation will remain active until dispose is called
++
+[[app-listing]]
+[source,java]
+----
+def dispose() {
+    if (transform != null) {
+        transform.executionSchema.dispose
+    }
+    transform = null
+    return
+}
+----
+
+* Create a rule to create DeploymentHosts for each HostInstances
+** The EventDrivenTransformationRuleFactory extension provides a builder API for rule definition
+** A viatra query pattern is used as precondition to the rule, which means the rule will be activated each time the given pattern changes allowing to update the output accordingly.
++
+[[app-listing]]
+[source,java]
+----
+val hostRule = createRule.precondition(HostInstanceMatcher.querySpecification)
+----
+
+* Add action for each kind of changes in the pattern to update trace and output models:
+** upon creation of a HostInstance
++
+[[app-listing]]
+[source,java]
+----
+.action(CRUDActivationStateEnum.CREATED) [
+    CRUDActivationStateEnum.CREATED) [
+    val hostinstance = hostInstance
+    val nodeIp = hostInstance.nodeIp
+    println('''Mapping host with IP: «nodeIp»''')
+    /* Create new DeploymentHost element in output model */
+    val host = cps2dep.deployment.createChild(deployment_Hosts, deploymentHost) => [
+        set(deploymentHost_Ip, nodeIp)
+    ]
+    /* Create trace entry */
+    cps2dep.createChild(CPSToDeployment_Traces, CPS2DeplyomentTrace) => [
+        addTo(CPS2DeplyomentTrace_CpsElements, hostinstance)
+        addTo(CPS2DeplyomentTrace_DeploymentElements, host)
+    ]
+]
+----
+
+** upon the change of a HostInstance
++
+[[app-listing]]
+[source,java]
+----
+.action(CRUDActivationStateEnum.UPDATED) [
+    /* find associated DeploymentHost element */
+    val depHost = engine.cps2depTrace
+                        .getOneArbitraryMatch(cps2dep, null, hostInstance, null)
+                        .depElement as DeploymentHost
+    val hostIp = depHost.ip
+    println('''Updating mapped host with IP: «hostIp»''')
+    /* update IP attribute */
+    val nodeIp = hostInstance.nodeIp
+    depHost.set(deploymentHost_Ip, nodeIp)
+    println('''Updated mapped host with IP: «nodeIp»''')
+]
+----
+
+** upon the removal of a HostInstance
++
+[[app-listing]]
+[source,java]
+----
+.action(CRUDActivationStateEnum.DELETED) [
+    /* Find trace element */
+    val traceMatch = engine.cps2depTrace
+                        .getOneArbitraryMatch(cps2dep, null, hostInstance, null)
+    val hostIp = hostInstance.nodeIp
+    println('''Removing host with IP: «hostIp»''')
+    /* Remove DeploymentHost element */
+    cps2dep.deployment.remove(deployment_Hosts, traceMatch.depElement)
+    /* Remove trace */
+    cps2dep.remove(CPSToDeployment_Traces, traceMatch.trace)
+    println('''Removed host with IP: «hostIp»''')
+]
+----
+
+** Add default activation lifecycle then build the rule:
+*** The lifecycle defines the state machine used to determine the possible states on which transition actions can defined.
++
+[[app-listing]]
+[source,java]
+----
+.addLifeCycle(Lifecycles.getDefault(true, true)).build
+----
+
+* The rule which create DeploymentApplication elements for ApplicationInstances, looks similar
++
+[[app-listing]]
+[source,java]
+----
+val applicationRule = createRule.precondition(ApplicationInstanceMatcher.querySpecification)
+.action(CRUDActivationStateEnum.CREATED) [
+    /* Find associated DeploymentHost for the HostInstance this application is allocated to */
+    val depHost = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance.allocatedTo).filter(
+        DeploymentHost).head
+    val appinstance = appInstance
+    val appId = appInstance.id
+    println('''Mapping application with ID: «appId»''')
+    /* Create DeploymentApplication application in host */
+    val app = depHost.createChild(deploymentHost_Applications, deploymentApplication) => [
+        set(deploymentApplication_Id, appId)
+    ]
+    /* create trace entry */
+    cps2dep.createChild(CPSToDeployment_Traces, CPS2DeplyomentTrace) => [
+        addTo(CPS2DeplyomentTrace_CpsElements, appinstance)
+        addTo(CPS2DeplyomentTrace_DeploymentElements, app)
+    ]
+    println('''Mapped application with ID: «appId»''')
+].action(CRUDActivationStateEnum.UPDATED) [
+    /* find associated DeploymentApplication */
+    val depApp = engine.cps2depTrace.getOneArbitraryMatch(cps2dep, null, appInstance, null).
+        depElement as DeploymentApplication
+    /* Update ID */
+    if (depApp.id != appInstance.id)
+        depApp.set(deploymentApplication_Id, appInstance.id)
+].action(CRUDActivationStateEnum.DELETED) [
+    /* find associated DeplyomentApplication */
+    val trace = engine.cps2depTrace.getAllValuesOftrace(null, appInstance, null).head as CPS2DeplyomentTrace
+    val depApp = trace.deploymentElements.head as DeploymentApplication
+    /* Remove application from host */
+    engine.allocatedDeploymentApplication.getAllValuesOfdepHost(depApp).head.remove(deploymentHost_Applications, depApp)
+    /* Remove traces */
+    cps2dep.remove(CPSToDeployment_Traces, trace)
+].addLifeCycle(Lifecycles.getDefault(true, true)).build
+----
+
+* Create transformation using the rules defined above
+** For cases when it is possible to have more than one rules activated (e.g. a new HostInstance is added to the model with already set allocated applications) a conflict resolver is used to provide a fixed ordering of rules to be executed.
+** We use a priority-based resolver (lower priority rules will be executed first), which considers disappearing rules' priority to be inverted (a disapearing application's priority will be -2)
++
+[[app-listing]]
+[source,java]
+----
+private def createTransformation() {
+    val fixedPriorityResolver =
+        new InvertedDisappearancePriorityConflictResolver
+    fixedPriorityResolver.setPriority(hostRule.ruleSpecification, 1)
+    fixedPriorityResolver.setPriority(applicationRule.ruleSpecification, 2)
+
+    val ExecutionSchemaBuilder builder =
+        new ExecutionSchemaBuilder().setEngine(engine)
+    builder.setConflictResolver(fixedPriorityResolver)
+    val schema = builder.build()
+
+    return EventDrivenTransformation.forEngine(engine)
+        .setSchema(schema)
+        .addRule(hostRule)
+        .addRule(applicationRule)
+        .build()
+}
+----
+
+== Creating a menu command to execute the transformation
+
+* Create UI plugin
+* Add dependencies:
++
+[[app-listing]]
+[source,java]
+----
+org.eclipse.ui,
+com.incquerylabs.course.cps.viatra.incr;bundle-version="0.1.0",
+org.eclipse.viatra.examples.cps.traceability;bundle-version="0.1.0",
+org.eclipse.viatra.query.runtime;bundle-version="1.2.0"
+----
+
+* Create handler implementations:
++
+[[app-listing]]
+[source,java]
+.ToggleTransformationHandler.java
+----
+public class ToggleTransformationHandler extends AbstractHandler implements IHandler {
+
+    ViatraQueryEngine engine;
+    CPS2DeploymentTransformationViatra transformation;
+
+
+    /* (non-Javadoc)
+     * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+     */
+    @Override
+    public Object execute(ExecutionEvent event) throws ExecutionException {
+        IStructuredSelection selection =
+            (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
+
+        CPSToDeployment tracemodel =
+            (CPSToDeployment) selection.getFirstElement();
+
+        if(transformation == null) {
+            if(engine == null) {
+                try {
+                    engine = ViatraQueryEngine.on(
+                                new EMFScope(
+                                    tracemodel.eResource()
+                                                .getResourceSet()));
+                    transformation = 
+                        new CPS2DeploymentTransformationViatra(tracemodel,
+                                                                engine);
+                } catch (ViatraQueryException e) {
+                    throw new ExecutionException(e.getMessage(), e);
+                }
+            }
+        } else {
+            transformation.dispose();
+        }
+
+        return null;
+    }
+
+}
+----
+
+* Register handler in the context menu of "CPSToDeployment" elements
++
+[[app-listing]]
+[source,xml]
+----
+<extension point="org.eclipse.ui.commands">
+    <command defaultHandler="com.incquerylabs.course.cps.viatra.incr.ui.ToggleTransformationHandler"
+            id="com.incquerylabs.course.cps.viatra.incr.ui.command"
+            name="Toggle Transformation">
+    </command>
+</extension>
+<extension point="org.eclipse.ui.menus">
+    <menuContribution allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+        <command commandId="com.incquerylabs.course.cps.viatra.incr.ui.command"
+                label="Toggle Incremental Transformation"
+                style="push">
+            <visibleWhen checkEnabled="false">
+                <with variable="selection">
+                    <count value="1">
+                    </count>
+                    <iterate>
+                        <adapt type="org.eclipse.viatra.examples.cps.traceability.CPSToDeployment">
+                        </adapt>
+                    </iterate>
+                </with>
+            </visibleWhen>
+        </command>
+    </menuContribution>
+</extension>
+----
+
+== Executing the transformation
+
+* Launch runtime eclipse
+* Create a generic resource project
+* Copy a .cyberphisical resource in it
++
+image::day3/screenshots/viatraIncr_example1.png[]
+
+* Create an empty Deployment model
+** Root element shall be Deployment
++
+image::day3/screenshots/viatraIncr_example2.png[]
+
+* Create a Traceability model
+** Root element shall be "CPS To Deployment"
++
+image::day3/screenshots/viatraIncr_example3.png[]
+
+* In the Traceability editor, load both CPS and Deployment models with "Load Resources.." in the context menu
++
+image::day3/screenshots/viatraIncr_example4.png[]
+
+* Set CPS and Deployment references of traceability model in the properties view
++
+image::day3/screenshots/viatraIncr_example5.png[]
+
+* Toggle transformation using the created command (on the context menu of the Traceability model root)
++
+image::day3/screenshots/viatraIncr_example6.png[]
+
+* Initial activation done on first modification of the input model, e.g. create a new HostType
