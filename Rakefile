@@ -17,7 +17,7 @@ namespace :doc do
     puts " -- HTML output at README.html"
 
     puts "Converting to PDF... (this one takes a while)"
-      `bundle exec asciidoctor-pdf --trace -a pdf-stylesdir=./ -a pdf-style=basic README.asciidoc`
+    `bundle exec asciidoctor-pdf -a pdf-stylesdir=./ -a pdf-style=basic README.asciidoc`
     puts " -- PDF  output at README.pdf"
   end
 
