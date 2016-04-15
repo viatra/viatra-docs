@@ -1,4 +1,4 @@
-= Course Materials
+= VIATRA Docs
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :rootdir: .
 :imagesdir: {rootdir}/images
@@ -10,22 +10,21 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :sectnums:
 :sectnumlevels: 4
 
-== Day 3
 :chapterdir: .
 
-include::{chapterdir}/Derived-features.adoc[leveloffset=+2]
+include::{chapterdir}/Derived-features.adoc[leveloffset=+1]
 
 <<<
-include::{chapterdir}/Querying-and-transforming-UML-profile-applications.adoc[leveloffset=+2]
+include::{chapterdir}/Querying-and-transforming-UML-profile-applications.adoc[leveloffset=+1]
 
 <<<
-include::{chapterdir}/Viatra-query-lab.adoc[leveloffset=+2]
+include::{chapterdir}/Viatra-query-lab.adoc[leveloffset=+1]
 
 <<<
-include::{chapterdir}/Viatra-batch-transformations.adoc[leveloffset=+2]
+include::{chapterdir}/Viatra-batch-transformations.adoc[leveloffset=+1]
 
 <<<
-include::{chapterdir}/Viatra-incremental-transformations.adoc[leveloffset=+2]
+include::{chapterdir}/Viatra-incremental-transformations.adoc[leveloffset=+1]
 
 <<<
 == Extra
