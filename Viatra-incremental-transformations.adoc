@@ -1,6 +1,6 @@
 = Viatra incremental transformations
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-ifndef::rootdir[:rootdir: ../]
+ifndef::rootdir[:rootdir: ./]
 :imagesdir: {rootdir}
 
 This exercise heps the audience to create a simple incremental transformation using the Viatra Transformation API. The transformation will create (and then incrementally update while active) a deployment model based on a CPS model. The exercise also covers registering a menu command which initializes the transformation.
@@ -349,28 +349,28 @@ public class ToggleTransformationHandler extends AbstractHandler implements IHan
 * Create a generic resource project
 * Copy a .cyberphisical resource in it
 +
-image::day3/screenshots/viatraIncr_example1.png[]
+image::screenshots/viatraIncr_example1.png[]
 
 * Create an empty Deployment model
 ** Root element shall be Deployment
 +
-image::day3/screenshots/viatraIncr_example2.png[]
+image::screenshots/viatraIncr_example2.png[]
 
 * Create a Traceability model
 ** Root element shall be "CPS To Deployment"
 +
-image::day3/screenshots/viatraIncr_example3.png[]
+image::screenshots/viatraIncr_example3.png[]
 
 * In the Traceability editor, load both CPS and Deployment models with "Load Resources.." in the context menu
 +
-image::day3/screenshots/viatraIncr_example4.png[]
+image::screenshots/viatraIncr_example4.png[]
 
 * Set CPS and Deployment references of traceability model in the properties view
 +
-image::day3/screenshots/viatraIncr_example5.png[]
+image::screenshots/viatraIncr_example5.png[]
 
 * Toggle transformation using the created command (on the context menu of the Traceability model root)
 +
-image::day3/screenshots/viatraIncr_example6.png[]
+image::screenshots/viatraIncr_example6.png[]
 
 * Initial activation done on first modification of the input model, e.g. create a new HostType

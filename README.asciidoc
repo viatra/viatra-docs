@@ -7,7 +7,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :numbered:
 
 == Day 3
-:chapterdir: day3
+:chapterdir: .
 
 include::{chapterdir}/Derived-features.adoc[leveloffset=+2]
 

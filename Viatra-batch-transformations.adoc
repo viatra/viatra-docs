@@ -1,6 +1,6 @@
 = Viatra batch transformations
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-ifndef::rootdir[:rootdir: ../]
+ifndef::rootdir[:rootdir: ./]
 :imagesdir: {rootdir}
 
 This exercise helps the audience to create a simple batch transformation using the Viatra Transformation API.
@@ -284,28 +284,28 @@ public class TransformHandler extends AbstractHandler implements IHandler {
 * Create a generic resource project
 * Copy a `.cyberphysical` resource in it
 +
-image::day3/screenshots/viatraIncr_example1.png[]
+image::screenshots/viatraIncr_example1.png[]
 
 * Create a Deployment model
 ** Root element shall be _Deployment_
 +
-image::day3/screenshots/viatraIncr_example2.png[]
+image::screenshots/viatraIncr_example2.png[]
 
 * Create a Traceability model
 ** Root element shall be _CPS To Deployment_
 +
-image::day3/screenshots/viatraIncr_example3.png[]
+image::screenshots/viatraIncr_example3.png[]
 
 * In the Traceability editor, load both CPS and Deployment models with _Load Resources..._ in the context menu
 +
-image::day3/screenshots/viatraIncr_example4.png[]
+image::screenshots/viatraIncr_example4.png[]
 
 * Set CPS and Deployment references of traceability model in the properties view
 +
-image::day3/screenshots/viatraIncr_example5.png[]
+image::screenshots/viatraIncr_example5.png[]
 
 * Create a new _HostType_, _HostInstance_, _ApplicationType_ and _ApplicationInstance_ in the Deployment model
 
 * Execute transformation using the created command (on the context menu of the Traceability model root)
 +
-image::day3/screenshots/viatraIncr_example6.png[]
+image::screenshots/viatraIncr_example6.png[]

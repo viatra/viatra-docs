@@ -1,6 +1,6 @@
 = Viatra Query (Pattern Language)
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-ifndef::rootdir[:rootdir: ../]
+ifndef::rootdir[:rootdir: ./]
 :imagesdir: {rootdir}
 
 homesite: https://www.eclipse.org/viatra/
@@ -13,12 +13,12 @@ Copy the URL of _Release builds_ update site: http://download.eclipse.org/incque
 
 Switch back to your Eclipse instance and select the _Help/Install New Software..._
 
-image::day3/screenshots/install.png[Select _Help/Install New Software..._]
+image::screenshots/install.png[Select _Help/Install New Software..._]
 
 Paste the copied URL to the _Work with_ field, than press _Enter_. When the view is updated, select the _Viatra Query SDK_. Tick the _Contact all update sites during install..._ field. Press _Next_, then _Next_ and finally _Finish_.
 After the install process, you should restart Eclipse.
 
-image::day3/screenshots/install2.png[Install window]
+image::screenshots/install2.png[Install window]
 
 For a faster installation, advanced users can untick out the _Contact all update sites during install..._ field, but they have to install _Xtend_ and _Xtext_ technologies manually.
 
@@ -55,7 +55,7 @@ pattern hostIpAddress(host: HostInstance, ip) {
 . Open the query specification (vql file)
 . then press the green arrow button again
 
-image::day3/screenshots/query_explorer.png[Query Explorer]
+image::screenshots/query_explorer.png[Query Explorer]
 
 == Pattern Language
 
