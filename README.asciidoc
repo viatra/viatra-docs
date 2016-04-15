@@ -5,6 +5,10 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :toclevels: 2
 :toc:
 :numbered:
+:icons: font
+:chapterdir: .
+:sectnums:
+:sectnumlevels: 4
 
 == Day 3
 :chapterdir: .
