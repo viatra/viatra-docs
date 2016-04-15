@@ -296,7 +296,7 @@ image::screenshots/viatraIncr_example2.png[]
 +
 image::screenshots/viatraIncr_example3.png[]
 
-* In the Traceability editor, load both CPS and Deployment models with _Load Resources..._ in the context menu
+* In the Traceability editor, load both CPS and Deployment models with _Load Resources\..._ in the context menu
 +
 image::screenshots/viatraIncr_example4.png[]
 

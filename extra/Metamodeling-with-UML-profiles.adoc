@@ -54,7 +54,7 @@ ifndef::rootdir[:rootdir: ../]
 **** Diagram Language: UML
 **** Browse Registered Profiles should contain registered UML profile
 * Optional: Customize palette
-** Right-click on palette content > Customize...
+** Right-click on palette content > Customize\...
 *** Add palette
 **** Take note of Advanced > EditorID (org.eclipse.papyrus.uml.diagram.deployment)
 **** Available Tools > select profile CyberPhysicalSystem

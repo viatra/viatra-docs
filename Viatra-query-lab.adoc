@@ -11,16 +11,16 @@ Navigate to the homesite of IncQuery and search for update sites at the download
 
 Copy the URL of _Release builds_ update site: http://download.eclipse.org/incquery/updates/release
 
-Switch back to your Eclipse instance and select the _Help/Install New Software..._
+Switch back to your Eclipse instance and select the _Help/Install New Software\..._
 
 image::screenshots/install.png[Select _Help/Install New Software..._]
 
-Paste the copied URL to the _Work with_ field, than press _Enter_. When the view is updated, select the _Viatra Query SDK_. Tick the _Contact all update sites during install..._ field. Press _Next_, then _Next_ and finally _Finish_.
+Paste the copied URL to the _Work with_ field, than press _Enter_. When the view is updated, select the _Viatra Query SDK_. Tick the _Contact all update sites during install\..._ field. Press _Next_, then _Next_ and finally _Finish_.
 After the install process, you should restart Eclipse.
 
 image::screenshots/install2.png[Install window]
 
-For a faster installation, advanced users can untick out the _Contact all update sites during install..._ field, but they have to install _Xtend_ and _Xtext_ technologies manually.
+For a faster installation, advanced users can untick out the _Contact all update sites during install\..._ field, but they have to install _Xtend_ and _Xtext_ technologies manually.
 
 == Setup the Laboratory
 
