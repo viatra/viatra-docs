@@ -37,7 +37,7 @@ include::{chapterdir}/Metamodeling-with-UML-profiles.adoc[leveloffset=+2]
 include::{chapterdir}/VIATRA-debugger.adoc[leveloffset=+2]
 
 <<<
-include::{chapterdir}/VIATRA-EVM-Barebone.adoc[leveloffset=+2]
+include::{chapterdir}/VIATRA-EVM-barebone.adoc[leveloffset=+2]
 
 <<<
 include::{chapterdir}/VIATRA-Query-API.adoc[leveloffset=+2]
