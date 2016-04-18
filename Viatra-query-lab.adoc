@@ -8,17 +8,21 @@ homesite: https://www.eclipse.org/viatra/
 
 == Install Viatra Query
 
-Navigate to the homesite of IncQuery and search for update sites at the download page: https://www.eclipse.org/incquery/download.php
+Navigate to the homesite of VIATRA and search for update sites at the download page: https://www.eclipse.org/viatra/downloads.php
 
-Copy the URL of _Release builds_ update site: http://download.eclipse.org/incquery/updates/release
+Copy the URL of _Release builds_ update site: http://download.eclipse.org/viatra/updates/release
+
+Before 28 April 2016 use the milestone update site: http://download.eclipse.org/viatra/updates/milestone
 
 Switch back to your Eclipse instance and select the _Help/Install New Software\..._
 
+.Select *Help/Install New Software\...*
 image::screenshots/install.png[Select _Help/Install New Software..._]
 
 Paste the copied URL to the _Work with_ field, than press _Enter_. When the view is updated, select the _Viatra Query SDK_. Tick the _Contact all update sites during install\..._ field. Press _Next_, then _Next_ and finally _Finish_.
 After the install process, you should restart Eclipse.
 
+.Install window
 image::screenshots/install2.png[Install window]
 
 For a faster installation, advanced users can untick out the _Contact all update sites during install\..._ field, but they have to install _Xtend_ and _Xtext_ technologies manually.
@@ -27,7 +31,7 @@ For a faster installation, advanced users can untick out the _Contact all update
 
 . Install `cps.domain` feature from dropins folder
 . Create a new Viatra Query project in the host Eclipse and name it to `com.incquerylabs.cps.queries`.
-. Add `org.eclipse.incquery.examples.cps.model` to the Plug-in dependencies
+. Add `org.eclipse.viatra.examples.cps.model` to the Plug-in dependencies
 . Create a new query definition in a package named `com.incquerylabs.cps.queries` and a file named `queries.vql`. In the wizard create an empty query. Fill the first query:
 +
 [[app-listing]]
@@ -36,26 +40,27 @@ For a faster installation, advanced users can untick out the _Contact all update
 ----
 package com.incquerylabs.cps.queries
 
-import "http://org.eclipse.incquery/model/cps"
+import "http://org.eclipse.viatra/model/cps"
 
 pattern hostIpAddress(host: HostInstance, ip) {
     HostInstance.nodeIp(host,ip);
 }
 ----
 . Create and launch an eclipse application with default configuration
-. In the runtime eclipse, import instances project ```models\org.eclipse.incquery.examples.cps.instances```
+. In the runtime eclipse, import instances project ```models\org.eclipse.viatra.examples.cps.instances```
 . Load the query and the instance model to the **Query Explorer**.
 
 == Query Explorer
 
-*Query Explorer* is the primary debug tool for debugging IncQuery patterns runtime. To open the view: _Window/Show View/Others/VIATRA/Query Explorer_ or you can simply press the kbd:[CTRL+3] shortcut and start to type the name of the view. On the left side of the view, there will be patterns inherited from  the host eclipse. The middle part will show you the matches of the patterns. To achive this, we have to load a model into the view:
+*Query Explorer* is the primary debug tool for debugging VIATRA Query patterns runtime. To open the view: _Window/Show View/Others/VIATRA/Query Explorer_ or you can simply press the kbd:[CTRL+3] shortcut and start to type the name of the view. On the left side of the view, there will be patterns inherited from  the host eclipse. The middle part will show you the matches of the patterns. To achive this, we have to load a model into the view:
 
-. Open our example instance model (/org.eclipse.incquery.examples.cps.instances/example.cyberphysicalsystem)
+. Open our example instance model (/org.eclipse.viatra.examples.cps.instances/example.cyberphysicalsystem)
 . Make sure "ReteEngine" is selected in the Query Explorer (next to the green arrow button)
 . then press the green arrow button on the view.
 . Open the query specification (vql file)
 . then press the green arrow button again
 
+.Query Explorer
 image::screenshots/query_explorer.png[Query Explorer]
 
 == Pattern Language
@@ -184,7 +189,7 @@ This pattern shows `count find` expression that aggregates multiple matches of a
 
 == Validation
 
-EMF-IncQuery provides facilities to create validation rules based on the pattern language of the framework. These rules can be evaluated on various EMF instance models and upon violations of constraints, markers are automatically created in the Eclipse Problems View.
+VIATRA provides facilities to create validation rules based on the pattern language of the framework. These rules can be evaluated on various EMF instance models and upon violations of constraints, markers are automatically created in the Eclipse Problems View.
 
 The *@Constraint* annotation can be used to mark a pattern as a validation rule. If the framework finds at least one pattern with such annotation.
 
@@ -202,7 +207,7 @@ For example:
 [[app-listing]]
 [source,java]
 ----
-@Constraint(targetEditorId = "org.eclipse.incquery.examples.cps.cyberPhysicalSystem.presentation.CyberPhysicalSystemEditorID",
+@Constraint(targetEditorId = "org.eclipse.viatra.examples.cps.cyberPhysicalSystem.presentation.CyberPhysicalSystemEditorID",
             severity = "error",
             message = "The ip address is not unique",
             key = {"host1"})

@@ -156,7 +156,7 @@ val hostRule = createRule(HostInstanceMatcher.querySpecification)
 ----
 val applicationRule = createRule(ApplicationInstanceMatcher.querySpecification) [
     val cpsApplicationInstance = it.appInstance
-    val appId = cpsApplicationInstance.id
+    val appId = cpsApplicationInstance.identifier
     println('''Mapping application with ID: «appId»''')
 
     /* Find the DeploymentHost created from the HostInstance to which the source ApplicationInstance is allocated */
@@ -185,7 +185,7 @@ val applicationRule = createRule(ApplicationInstanceMatcher.querySpecification) 
 [source,java]
 ----
 def execute() {
-    println('''Executing transformation on: Cyber-physical system: «cps2dep.cps.id»''')
+    println('''Executing transformation on: Cyber-physical system: «cps2dep.cps.identifier»''')
     /* Clear output & trace model for batch transformation**/
     cps2dep.deployment.hosts.clear
     cps2dep.traces.clear
@@ -283,30 +283,36 @@ public class TransformHandler extends AbstractHandler implements IHandler {
 
 * Launch runtime eclipse
 * Create a generic resource project
-* Copy a `.cyberphysical` resource in it
+* Copy a `.cyberphysicalsystem` resource in it
 +
+.Project with a .cyberphysicalsystem resource
 image::screenshots/viatraIncr_example1.png[]
 
 * Create a Deployment model
 ** Root element shall be _Deployment_
 +
+.New Deployment Model
 image::screenshots/viatraIncr_example2.png[]
 
 * Create a Traceability model
 ** Root element shall be _CPS To Deployment_
 +
+.New Traceability Model
 image::screenshots/viatraIncr_example3.png[]
 
 * In the Traceability editor, load both CPS and Deployment models with _Load Resources\..._ in the context menu
 +
+.Load necessary resources into the Tracebility Model
 image::screenshots/viatraIncr_example4.png[]
 
 * Set CPS and Deployment references of traceability model in the properties view
 +
+.Set the references of the Traceability Model
 image::screenshots/viatraIncr_example5.png[]
 
 * Create a new _HostType_, _HostInstance_, _ApplicationType_ and _ApplicationInstance_ in the Deployment model
 
 * Execute transformation using the created command (on the context menu of the Traceability model root)
 +
-image::screenshots/viatraIncr_example6.png[]
+.Transformation command in the context menu
+image::screenshots/viatrabatch.png[]

@@ -31,7 +31,7 @@ val searchedHost = engine.hostInstancesForIP
 
 engine.hostTypesConnectedToApplicationTypes.forEachMatch(new HostTypesConnectedToApplicationTypesProcessor() {
     override process(HostType pHostType, ApplicationType pAppType) {
-        '''«pHostType.id»«IF pHostType.id.length<8»	«ENDIF»	| «pAppType.id»'''.log
+        '''«pHostType.identifier»«IF pHostType.identifier.length<8»	«ENDIF»	| «pAppType.identifier»'''.log
     }
 })
 ----
@@ -108,7 +108,7 @@ val hostTypesConnectedToApplicationTypesMatches =
         engine.getMatcher(hostTypesConnectedToApplicationTypes, hint)
             .allValuesOfhostType
 '''HostTypes:'''.log
-hostTypesConnectedToApplicationTypes.forEach['''	«it.id»'''.log]
+hostTypesConnectedToApplicationTypes.forEach['''	«it.identifier»'''.log]
 
 engine.dispose
 ----

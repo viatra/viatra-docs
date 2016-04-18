@@ -11,6 +11,7 @@ The development and debugging of reactive event-driven model transformations is 
 == Transformation adapter framework
 A full featured transformation debugger requires a software solution that is able to observe and control VIATRA-based model transformations. Such an extension is able to insert additional functionality into certain points during model transformations. The transformation adapter framework allows the definition of additional functionalities that are executed at certain points in event-driven model transformations. The previously described debug functionalities are implemented using the transformation adapter framework.
 
+.Adapter Framework
 image::extra/images/adapter_framework.png[Adapter Framework]
 
 * _Adapter Interface_: The Adapter Interface defines a set of callback methods that are executed at certain points during the transformation execution. A number of Adapters can implement this interface, in order to define additional functionality that should be undertaken at certain points in the transformation.
@@ -23,6 +24,7 @@ The Adapter Framework provides a generic, easy-to-use technique for creating use
 === Debug adapter
 The debug adapter implements a breakpoint based debugging approach (similar to JDT). It contains the logic for stopping the transformation execution if a breakpoint condition matches, and ordering the UI to display the program context.To support various debugging use cases, the debugger can be configured with different user interface and breakpoint implementations.
 
+.Debug Adapter
 image::extra/images/debug_adapter.png[Debug Adapter]
 
 * _Debugger UI_: Responsible for displaying the internal state of the event-driven model transformation in progress, and it allows the transformation developer to manipulate the execution sequence. Using this component enables the transformation debugger component to remain UI independent, and support the definition of custom user interface implementations.
@@ -37,6 +39,7 @@ image::extra/images/debug_adapter.png[Debug Adapter]
 
 This adapter allows the transformation developer to manually override the execution order of transformation rule activations. Particularly useful during debugging, as allows the easy reproduction of bugs, which require a certain firing order. It uses the similar interchangeable Debugger UI component as the Debug adapter.
 
+.Manual Conflict Adapter
 image::extra/images/mc_adapter.png[Manual Conflict Adapter]
 
 === Trace coder adapter
@@ -47,6 +50,7 @@ Transformation traces are hierarchical object structures aiming at storing trans
 
 Similar to the previously introduced adapters, the trace coder adapter utilizes interchangeable subcomponents:
 
+.Trace Coder Adapter
 image::extra/images/coder_adapter.png[Trace Coder Adapter]
 
 * _Activation coder_: Creates Activation Trace objects, using the parameters extracted from the activation object.
@@ -57,9 +61,8 @@ image::extra/images/coder_adapter.png[Trace Coder Adapter]
 This adapter is responsible for re-executing a transformation sequence recorded by the trace coder adapter. Particularly useful during debugging, as it allows the determinization of the otherwise random execution sequence of VIATRA event-driven transformations. 
 It operates the following way: as the transformation is being executed, the activation at hand is compared to the upcoming entry in a previously loaded transformation trace. If the activation matches the trace record, it is executed, if not the executor finds the matching one.
 
-
+.Trace Executor Adapter
 image::extra/images/executor_adapter.png[Trace Executor Adapter]
-
 
 As seen here, the trace executor component utilizes the same sub-components as the trace coder.
 

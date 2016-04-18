@@ -11,7 +11,7 @@ To define a derived feature in your EMF metamodel, you have set the following at
 * transient = true (to avoid persisting the value into file)
 * volatile = true (to remove the field declaration in the object)
 
-EMF-IncQuery supports the definition of efficient, incrementally maintained, well-behaving derived features in EMF by using advanced model queries and incremental evaluation for calculating the value of derived features and providing automated code generation for integrating into existing applications.
+VIATRA Query supports the definition of efficient, incrementally maintained, well-behaving derived features in EMF by using advanced model queries and incremental evaluation for calculating the value of derived features and providing automated code generation for integrating into existing applications.
 
 The *@QueryBasedFeature* annotation can be used to mark a pattern as a derived feature realization. If the framework can find out the feature from the signature of the pattern (_patter name_, _first paramter type_, _second paramter type_), the annotation parameters can be empty.
 
@@ -21,7 +21,7 @@ Annotation parameters:
 * `source` = "Src" (default: first parameter) - indicates which query parameter (using its name) is the source EObject, the inferred type of this parameter indicates which EClass generated code has to be modified
 * `target` = "Trg" (default: second parameter) - indicates which query parameter (using its name) is the target of the derived feature
 * `kind` = "single/many/counter/sum/iteration" (default: `feature.isMany?many:single`) - indicates what kind of calculation should be done on the query results  to map them to derived feature values
-* `keepCache` = "true/false" (default: `true`) - indicates whether a separate cache should be kept with the current value. Single and Many kind derived features can work without keeping an additional cache, as the EMF-IncQuery RETE network already keeps a cache of the current values.
+* `keepCache` = "true/false" (default: `true`) - indicates whether a separate cache should be kept with the current value. Single and Many kind derived features can work without keeping an additional cache, as the  RETE network already keeps a cache of the current values.
 
 For example:
 

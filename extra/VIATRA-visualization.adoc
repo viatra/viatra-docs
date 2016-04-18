@@ -17,13 +17,13 @@ VIATRA provides a simple data binding facility that can be used to bind pattern 
 
 * _@ObservableValue_: allows the developer to customize the appearance of a match. It defines an observable value (as defined in JFace databinding) which can be bound to an Eclipse/JFace UI. 
 ** _name_ (String): the name of the parameter
-** _expression_ (String): the attribute to be observed definition without '$' marks. For example `@ObservableValue(name = "id", expression = "host.id")`
+** _expression_ (String): the attribute to be observed definition without '$' marks. For example `@ObservableValue(name = "id", expression = "host.identifier")`
 ** _labelExpression_: this annotation makes it possible to create observable string properties, which are useful when presenting relations between objects inside a JFace viewer component.
 
 [[app-listing]]
 [source,java]
 ----
-@ObservableValue(name = "id", expression = "host.id")
+@ObservableValue(name = "id", expression = "host.identifier")
 @ObservableValue(name = "node_ip", expression = "host.nodeIp")
 @ObservableValue(name = "current_cpu", expression = "host.availableCpu")
 @ObservableValue(name = "current_hdd", expression = "host.availableHdd")
@@ -35,7 +35,7 @@ pattern hostInstances(host: HostInstance) {
 	HostInstance(host);
 }
 
-@ObservableValue(name = "id", expression = "app.id")
+@ObservableValue(name = "id", expression = "app.identifier")
 @ObservableValue(name = "state", expression = "app.state")
 @ObservableValue(name = "db_user", expression = "app.dbUser")
 @ObservableValue(name = "db_pass", expression = "app.dbPassword")
@@ -121,7 +121,7 @@ dataBindingContext.bindValue(dbUserTarget, adapter.getProperty("db_user").observ
 
 == VIATRA Viewers
 
-The IncQuery Viewers component can bind the results of queries to various JFace Viewers: JFace ListViewer and TreeViewers are currently supported. Additionally, by installing extra features from the extra update site GraphViewers (based on GEF4 Zest) are also supported. In the following example, and during the lab excersize as well, usage of GraphViewers will be presented. These GraphViewers are capable of displaying query results as graphs.
+The VIATRA Viewers component can bind the results of queries to various JFace Viewers: JFace ListViewer and TreeViewers are currently supported. Additionally, by installing extra features from the extra update site GraphViewers (based on GEF4 Zest) are also supported. In the following example, and during the lab excersize as well, usage of GraphViewers will be presented. These GraphViewers are capable of displaying query results as graphs.
 
 === Usage
 
@@ -139,7 +139,7 @@ In order to use the VIATRA Viewers addon the following steps need to be undertak
 [source,java]
 ----
 //Host Type objects will be nodes of the displayed graph 
-@Item(item = host, label = "$host.id$")
+@Item(item = host, label = "$host.identifier$")
 //Format options can be set using the @Format annotation
 @Format(color = "#0033CC", textColor = "#FFFFFF")
 pattern hostTypes(host) {

@@ -195,7 +195,7 @@ val applicationRule = createRule.precondition(ApplicationInstanceMatcher.querySp
     val depHost = engine.cps2depTrace.getAllValuesOfdepElement(null, null, appInstance.allocatedTo).filter(
         DeploymentHost).head
     val appinstance = appInstance
-    val appId = appInstance.id
+    val appId = appInstance.identifier
     println('''Mapping application with ID: «appId»''')
     /* Create DeploymentApplication application in host */
     val app = depHost.createChild(deploymentHost_Applications, deploymentApplication) => [
@@ -212,8 +212,8 @@ val applicationRule = createRule.precondition(ApplicationInstanceMatcher.querySp
     val depApp = engine.cps2depTrace.getOneArbitraryMatch(cps2dep, null, appInstance, null).
         depElement as DeploymentApplication
     /* Update ID */
-    if (depApp.id != appInstance.id)
-        depApp.set(deploymentApplication_Id, appInstance.id)
+    if (depApp.identifier != appInstance.identifier)
+        depApp.set(deploymentApplication_Id, appInstance.identifier)
 ].action(CRUDActivationStateEnum.DELETED) [
     /* find associated DeplyomentApplication */
     val trace = engine.cps2depTrace.getAllValuesOftrace(null, appInstance, null).head as CPS2DeplyomentTrace
@@ -258,6 +258,7 @@ private def createTransformation() {
 +
 [[app-listing]]
 [source,java]
+.MANIFEST.MF
 ----
 org.eclipse.ui,
 com.incquerylabs.course.cps.viatra.incr;bundle-version="0.1.0",
@@ -316,6 +317,7 @@ public class ToggleTransformationHandler extends AbstractHandler implements IHan
 +
 [[app-listing]]
 [source,xml]
+.plugin.xml
 ----
 <extension point="org.eclipse.ui.commands">
     <command defaultHandler="com.incquerylabs.course.cps.viatra.incr.ui.ToggleTransformationHandler"
@@ -348,30 +350,36 @@ public class ToggleTransformationHandler extends AbstractHandler implements IHan
 
 * Launch runtime eclipse
 * Create a generic resource project
-* Copy a .cyberphisical resource in it
+* Copy a `.cyberphysicalsystem` resource in it
 +
+.Project with a .cyberphysicalsystem resource
 image::screenshots/viatraIncr_example1.png[]
 
 * Create an empty Deployment model
 ** Root element shall be Deployment
 +
+.New Deployment Model
 image::screenshots/viatraIncr_example2.png[]
 
 * Create a Traceability model
 ** Root element shall be "CPS To Deployment"
 +
+.New Traceability Model
 image::screenshots/viatraIncr_example3.png[]
 
 * In the Traceability editor, load both CPS and Deployment models with "Load Resources.." in the context menu
 +
+.Load necessary resources into the Traceability Model
 image::screenshots/viatraIncr_example4.png[]
 
 * Set CPS and Deployment references of traceability model in the properties view
 +
+.Set the references of the Traceability Model
 image::screenshots/viatraIncr_example5.png[]
 
 * Toggle transformation using the created command (on the context menu of the Traceability model root)
 +
+.Toggle transformation in the context menu
 image::screenshots/viatraIncr_example6.png[]
 
 * Initial activation done on first modification of the input model, e.g. create a new HostType

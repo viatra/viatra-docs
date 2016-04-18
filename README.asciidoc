@@ -4,6 +4,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesdir: {rootdir}/images
 :toclevels: 2
 :toc:
+:toc2:
 :numbered:
 :icons: font
 :chapterdir: .
