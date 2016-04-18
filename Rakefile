@@ -24,6 +24,6 @@ namespace :doc do
   desc 'clean out generated formats'
   task :clean do
     `rm ViatraDocs.html`
-    `rm ViatraDocs.pdf
+    `rm ViatraDocs.pdf`
   end
 end
