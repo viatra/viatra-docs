@@ -12,12 +12,6 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 :chapterdir: .
 
-include::{chapterdir}/Derived-features.adoc[leveloffset=+1]
-
-<<<
-include::{chapterdir}/Querying-and-transforming-UML-profile-applications.adoc[leveloffset=+1]
-
-<<<
 include::{chapterdir}/Viatra-query-lab.adoc[leveloffset=+1]
 
 <<<
@@ -30,7 +24,13 @@ include::{chapterdir}/Viatra-incremental-transformations.adoc[leveloffset=+1]
 == Extra
 :chapterdir: extra
 
+include::{chapterdir}/Derived-features.adoc[leveloffset=+2]
+
+<<<
 include::{chapterdir}/Metamodeling-with-UML-profiles.adoc[leveloffset=+2]
+
+<<<
+include::{chapterdir}/Querying-and-transforming-UML-profile-applications.adoc[leveloffset=+2]
 
 <<<
 include::{chapterdir}/VIATRA-debugger.adoc[leveloffset=+2]

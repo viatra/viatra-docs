@@ -1,6 +1,6 @@
 = Querying & transforming UML profile applications
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-ifndef::rootdir[:rootdir: ./]
+ifndef::rootdir[:rootdir: ../]
 :imagesdir: {rootdir}
 
 * Install
