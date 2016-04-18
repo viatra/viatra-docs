@@ -22,7 +22,7 @@ The Adapter Framework provides a generic, easy-to-use technique for creating use
 === Debug adapter
 The debug adapter implements a breakpoint based debugging approach (similar to JDT). It contains the logic for stopping the transformation execution if a breakpoint condition matches, and ordering the UI to display the program context.To support various debugging use cases, the debugger can be configured with different user interface and breakpoint implementations.
 
-image:extra/images/debug_adapter.png[Debug Adapter]
+image::extra/images/debug_adapter.png[Debug Adapter]
 
 * _Debugger UI_: Responsible for displaying the internal state of the event-driven model transformation in progress, and it allows the transformation developer to manipulate the execution sequence. Using this component enables the transformation debugger component to remain UI independent, and support the definition of custom user interface implementations.
 ** _Console Debugger UI_: This default UI implementation uses the standard input and output in order to communicate with the transformation developer.
