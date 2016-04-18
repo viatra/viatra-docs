@@ -53,7 +53,22 @@ pattern cps2depTrace(
 ----
 
 * Create transformation class in Xtend
-** Register used APIs as extensions
+** Create new _Model Transformation_ with the wizard
++
+.Model Transformation Wizard - Create new transformation
+image::screenshots/transformation_wizard.png[]
+
+*** Setup the name of the transformation and click Next
++
+.Model Transformation Wizard - Name of the new batch transformation
+image::screenshots/batch_transformation_wizard_name.png[]
+
+*** Setup the type of the transformation to _BatchTransformation_ and click Finish
++
+.Model Transformation Wizard - Type of the new transformation
+image::screenshots/batch_transformation_wizard_type.png[]
+
+** Register used, domain-specific APIs as extensions, common APIs for the batch transformation are already generated
 +
 [[app-listing]]
 [source,java]
@@ -64,56 +79,31 @@ pattern cps2depTrace(
 val extension CpsXformM2M cpsXformM2M = CpsXformM2M.instance
 
 /*
- * Model manipulation API
- */
-val extension IModelManipulations manipulation
-
-/*
  * EMF metamodels
  */
 val extension DeploymentPackage depPackage = DeploymentPackage.eINSTANCE
 val extension TraceabilityPackage trPackage = TraceabilityPackage.eINSTANCE
-
-/*
- * VIATRA transformation API
- */
-val extension BatchTransformationRuleFactory = new BatchTransformationRuleFactory
-val extension BatchTransformation transformation
-val extension BatchTransformationStatements statements
 ----
 
-* Constructor will also initialize transformation
-** It assumes that the output and trace models are already created
+* Constructor will also initialize transformation (replace the generated one)
+** It assumes that the resource and trace models are already created
 ** The IModelManipulations implementation is used to make model access replaceable, this way the same transformation may be used for cases where the resource set is transactional
 +
 [[app-listing]]
 [source,java]
 ----
 val CPSToDeployment cps2dep
-val ViatraQueryEngine engine
-val Resource output
 
 new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
-  this.cps2dep = cps2dep
-  output = cps2dep.deployment.eResource
-  this.engine = engine
-  manipulation = new SimpleModelManipulations(engine)
-  prepare(engine)
-  transformation = BatchTransformation::forEngine(engine)
-  statements = new BatchTransformationStatements(transformation)
+    this.cps2dep = cps2dep
+    resource = cps2dep.deployment.eResource
+    this.engine = engine
+    prepare(engine)
+    createTransformation
 }
 ----
 
-* Transformation will remain active until dispose is called
-+
-[[app-listing]]
-[source,java]
-----
-def dispose() {
-    transformation.ruleEngine.dispose
-}
-----
-
+* Transformation will remain active until dispose is called (there is a generated `dispose` method in the class)
 * Create a rule to create DeploymentHosts for each HostInstances
 ** The `BatchTransformationRuleFactory` extension provides a builder API for rule definition
 ** A VIATRA query is used as precondition to the rule, which means the rule will be activated each time the given pattern changes allowing to update the output accordingly.
@@ -218,7 +208,7 @@ org.eclipse.viatra.query.runtime;bundle-version="1.2.0"
 public class TransformHandler extends AbstractHandler implements IHandler {
 
     ViatraQueryEngine engine;
-    CPS2DeploymentBatchViatra transformation;
+    CPS2DeploymentTransformationViatra transformation;
 
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -233,7 +223,7 @@ public class TransformHandler extends AbstractHandler implements IHandler {
                 engine = ViatraQueryEngine.on(
                             new EMFScope(
                                 tracemodel.eResource().getResourceSet()));
-                transformation = new CPS2DeploymentBatchViatra(tracemodel, 
+                transformation = new CPS2DeploymentTransformationViatra(tracemodel, 
                                                                 engine);
             } catch (ViatraQueryException e) {
                 throw new ExecutionException(e.getMessage(), e);

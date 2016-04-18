@@ -42,7 +42,22 @@ pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
 ----
 
 * Create transformation class (preferably Xtend)
-* Register used APIs as extensions
+** Create new _Model Transformation_ with the wizard
++
+.Model Transformation Wizard - Create new transformation
+image::screenshots/transformation_wizard.png[]
+
+*** Setup the name of the transformation and click Next
++
+.Model Transformation Wizard - Name of the new batch transformation
+image::screenshots/eventdriven_transformation_wizard_name.png[]
+
+*** Setup the type of the transformation to _BatchTransformation_ and click Finish
++
+.Model Transformation Wizard - Type of the new transformation
+image::screenshots/eventdriven_transformation_wizard_type.png[]
+
+* Register used, domain-specific APIs as extensions, common APIs are already generated
 +
 [[app-listing]]
 [source,java]
@@ -53,23 +68,13 @@ pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
 val extension CpsXformM2M cpsXformM2M = CpsXformM2M.instance
 
 /*
- * Model manipulation API
- */
-val extension IModelManipulations manipulation
-
-/*
  * EMF metamodels
  */
 val extension DeploymentPackage depPackage = DeploymentPackage::eINSTANCE
 val extension TraceabilityPackage trPackage = TraceabilityPackage::eINSTANCE
-
-/*
- * VIATRA Transformation API
- */
-val extension EventDrivenTransformationRuleFactory rulefactory = new EventDrivenTransformationRuleFactory
 ----
 
-* Constructor will also initialize transformation
+* Constructor will also initialize transformation (replace the generated one)
 ** It assumes that the output and trace models are already created
 ** The IModelManipulations implementation is used to make model access replaceable, this way the same transformation may be used for cases where the resource set is transactional
 +
@@ -77,33 +82,17 @@ val extension EventDrivenTransformationRuleFactory rulefactory = new EventDriven
 [source,java]
 ----
 val CPSToDeployment cps2dep
-val ViatraQueryEngine engine
-
-EventDrivenTransformation transform
 
 new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
     this.cps2dep = cps2dep
+    this.resource = cps2dep.deployment.eResource
     this.engine = engine
-    manipulation = new SimpleModelManipulations(engine)
     prepare(engine)
-    transform = createTransformation
+    createTransformation
 }
 ----
 
-* Transformation will remain active until dispose is called
-+
-[[app-listing]]
-[source,java]
-----
-def dispose() {
-    if (transform != null) {
-        transform.executionSchema.dispose
-    }
-    transform = null
-    return
-}
-----
-
+* Transformation will remain active until dispose is called (a `dispose` method is already generated)
 * Create a rule to create DeploymentHosts for each HostInstances
 ** The EventDrivenTransformationRuleFactory extension provides a builder API for rule definition
 ** A viatra query pattern is used as precondition to the rule, which means the rule will be activated each time the given pattern changes allowing to update the output accordingly.
@@ -121,7 +110,6 @@ val hostRule = createRule.precondition(HostInstanceMatcher.querySpecification)
 [source,java]
 ----
 .action(CRUDActivationStateEnum.CREATED) [
-    CRUDActivationStateEnum.CREATED) [
     val hostinstance = hostInstance
     val nodeIp = hostInstance.nodeIp
     println('''Mapping host with IP: «nodeIp»''')
@@ -212,7 +200,7 @@ val applicationRule = createRule.precondition(ApplicationInstanceMatcher.querySp
     val depApp = engine.cps2depTrace.getOneArbitraryMatch(cps2dep, null, appInstance, null).
         depElement as DeploymentApplication
     /* Update ID */
-    if (depApp.identifier != appInstance.identifier)
+    if (depApp.id != appInstance.identifier)
         depApp.set(deploymentApplication_Id, appInstance.identifier)
 ].action(CRUDActivationStateEnum.DELETED) [
     /* find associated DeplyomentApplication */
@@ -225,29 +213,27 @@ val applicationRule = createRule.precondition(ApplicationInstanceMatcher.querySp
 ].addLifeCycle(Lifecycles.getDefault(true, true)).build
 ----
 
-* Create transformation using the rules defined above
+* Replace the generated `createTransformation` using the rules defined above
 ** For cases when it is possible to have more than one rules activated (e.g. a new HostInstance is added to the model with already set allocated applications) a conflict resolver is used to provide a fixed ordering of rules to be executed.
-** We use a priority-based resolver (lower priority rules will be executed first), which considers disappearing rules' priority to be inverted (a disapearing application's priority will be -2)
+** We use a priority-based resolver (lower priority rules will be executed first), which considers priority of disappearing rules to be inverted (a disappearing application's priority will be -2)
 +
 [[app-listing]]
 [source,java]
 ----
 private def createTransformation() {
-    val fixedPriorityResolver =
-        new InvertedDisappearancePriorityConflictResolver
+    //Initialize model manipulation API
+    this.manipulation = new SimpleModelManipulations(engine)
+    
+    //Initialize event-driven transformation
+    val fixedPriorityResolver = new InvertedDisappearancePriorityConflictResolver
     fixedPriorityResolver.setPriority(hostRule.ruleSpecification, 1)
     fixedPriorityResolver.setPriority(applicationRule.ruleSpecification, 2)
-
-    val ExecutionSchemaBuilder builder =
-        new ExecutionSchemaBuilder().setEngine(engine)
-    builder.setConflictResolver(fixedPriorityResolver)
-    val schema = builder.build()
-
-    return EventDrivenTransformation.forEngine(engine)
-        .setSchema(schema)
+    
+    transformation = EventDrivenTransformation.forEngine(engine)
+        .setConflictResolver(fixedPriorityResolver)
         .addRule(hostRule)
         .addRule(applicationRule)
-        .build()
+        .build
 }
 ----
 
