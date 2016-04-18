@@ -1,16 +1,16 @@
-= Viatra batch transformations
+= Batch Transformations
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 ifndef::rootdir[:rootdir: ./]
 ifndef::source-highlighter[:source-highlighter: coderay]
 :imagesdir: {rootdir}
 
-This exercise helps the audience to create a simple batch transformation using the Viatra Transformation API.
+This exercise helps the audience to create a simple batch transformation using the VIATRA Transformation API.
 The transformation will transform the hosts and applications in a CPS model to a deployment model.
 The exercise also covers registering a menu command which initializes the transformation.
 
 == Create transformation
 
-* Create Viatra Query project
+* Create VIATRA Query project
 ** Create Queries:
 *** For source model:
 +
@@ -59,7 +59,7 @@ pattern cps2depTrace(
 [source,java]
 ----
 /*
- * Viatra Query Pattern group
+ * VIATRA Query Pattern group
  */
 val extension CpsXformM2M cpsXformM2M = CpsXformM2M.instance
 
@@ -75,7 +75,7 @@ val extension DeploymentPackage depPackage = DeploymentPackage.eINSTANCE
 val extension TraceabilityPackage trPackage = TraceabilityPackage.eINSTANCE
 
 /*
- * Viatra transformation API
+ * VIATRA transformation API
  */
 val extension BatchTransformationRuleFactory = new BatchTransformationRuleFactory
 val extension BatchTransformation transformation
@@ -116,7 +116,7 @@ def dispose() {
 
 * Create a rule to create DeploymentHosts for each HostInstances
 ** The `BatchTransformationRuleFactory` extension provides a builder API for rule definition
-** A Viatra query pattern is used as precondition to the rule, which means the rule will be activated each time the given pattern changes allowing to update the output accordingly.
+** A VIATRA query is used as precondition to the rule, which means the rule will be activated each time the given pattern changes allowing to update the output accordingly.
 +
 [[app-listing]]
 [source,java]

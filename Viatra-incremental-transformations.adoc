@@ -1,14 +1,14 @@
-= Viatra incremental transformations
+= Event-driven Transformations
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 ifndef::rootdir[:rootdir: ./]
 ifndef::source-highlighter[:source-highlighter: coderay]
 :imagesdir: {rootdir}
 
-This exercise heps the audience to create a simple incremental transformation using the Viatra Transformation API. The transformation will create (and then incrementally update while active) a deployment model based on a CPS model. The exercise also covers registering a menu command which initializes the transformation.
+This exercise heps the audience to create a simple event-driven transformation using the VIATRA Transformation API. The transformation will create (and then incrementally update while active) a deployment model based on a CPS model. The exercise also covers registering a menu command which initializes the transformation.
 
 == Create transformation
 
-* Create Viatra Query project
+* Create VIATRA Query project
 ** Create Queries:
 *** For source model  
 +
@@ -41,14 +41,14 @@ pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
 }
 ----
 
-* Create transformation class (preferably XTend)
+* Create transformation class (preferably Xtend)
 * Register used APIs as extensions
 +
 [[app-listing]]
 [source,java]
 ----
 /*
- * Viatra Query Pattern group
+ * VIATRA Query group
  */
 val extension CpsXformM2M cpsXformM2M = CpsXformM2M.instance
 
@@ -64,7 +64,7 @@ val extension DeploymentPackage depPackage = DeploymentPackage::eINSTANCE
 val extension TraceabilityPackage trPackage = TraceabilityPackage::eINSTANCE
 
 /*
- * Viatra transformation API
+ * VIATRA Transformation API
  */
 val extension EventDrivenTransformationRuleFactory rulefactory = new EventDrivenTransformationRuleFactory
 ----

@@ -1,4 +1,3 @@
-
 = VIATRA Debugger
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 ifndef::rootdir[:rootdir: ../]

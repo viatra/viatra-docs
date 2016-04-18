@@ -4,14 +4,6 @@ ifndef::rootdir[:rootdir: ../]
 ifndef::source-highlighter[:source-highlighter: coderay]
 :imagesdir: {rootdir}
 
-* Install
-** https://hudson.eclipse.org/viatra/job/viatra-master/lastSuccessfulBuild/artifact/releng/org.eclipse.viatra.update/target/repository/
-*** Uncheck _Group items by category_
-*** VIATRA Query SDK
-*** VIATRA EMF Engine
-** http://download.eclipse.org/releases/mars/
-*** Xtend IDE
-** CPS metamodels via dropins
 * Import the following CPS projects:
 ** org.eclipse.viatra.examples.cps.xform.m2m.util
 ** org.eclipse.viatra.examples.cps.tests

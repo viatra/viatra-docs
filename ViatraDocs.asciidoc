@@ -1,4 +1,4 @@
-= VIATRA Docs
+= Getting Started with VIATRA
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :rootdir: .
 :imagesdir: {rootdir}/images
@@ -10,21 +10,24 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :chapterdir: .
 :sectnums:
 :sectnumlevels: 4
-:source-highlighter: coderay
 
 
 :chapterdir: .
 
+include::{chapterdir}/Tutorial-environment.adoc[leveloffset=+1]
+
+<<<
 include::{chapterdir}/Viatra-query-lab.adoc[leveloffset=+1]
 
 <<<
-include::{chapterdir}/Viatra-batch-transformations.adoc[leveloffset=+1]
+== Model Transformation Development
+include::{chapterdir}/Viatra-batch-transformations.adoc[leveloffset=+2]
 
 <<<
-include::{chapterdir}/Viatra-incremental-transformations.adoc[leveloffset=+1]
+include::{chapterdir}/Viatra-incremental-transformations.adoc[leveloffset=+2]
 
 <<<
-== Extra
+== Advanced Features
 :chapterdir: extra
 
 include::{chapterdir}/Derived-features.adoc[leveloffset=+2]

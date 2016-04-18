@@ -1,4 +1,4 @@
-= VIATRA Visualization
+= Displaying Query Results in the User Interface
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 ifndef::rootdir[:rootdir: ../]
 ifndef::source-highlighter[:source-highlighter: coderay]
@@ -6,16 +6,16 @@ ifndef::source-highlighter[:source-highlighter: coderay]
 
 As far as the visualization of VIATRA pattern matching results is concerned, the VIATRA framework provides two approaches:
 
-* _VIATRA Databinding Addon_: Using this addon, VIATRA pattern matches can be directly incorporated in newly developed applications that utilize Eclipse databinding.
+* _VIATRA Data Binding Addon_: Using this addon, VIATRA pattern matches can be directly incorporated in newly developed applications that utilize JFace Data Binding.
 * _VIATRA Viewers Addon_: The VIATRA Viewers component helps developing model-driven user interfaces by filling and updating model viewer results with the results of model queries. The implementation relies on (and is modeled after) the Event-driven Virtual Machine and JFace Viewers libraries.
 
-== VIATRA Databinding
+== VIATRA Data Binding
 
-VIATRA provides a simple data binding facility that can be used to bind pattern matches to UI elements. The feature is mainly intended to be used to integrate VIATRA queries to newly developed user interfaces. In order to utilize this functionality, the source patterns need to be annotated, and the used UI components need to be bound to the Observables provided by the databinding API. In the following sections an example is shown which uses VIATRA databinding.
+VIATRA provides a simple data binding facility that can be used to bind pattern matches to UI elements. The feature is mainly intended to be used to integrate VIATRA queries to newly developed user interfaces. In order to utilize this functionality, the source patterns need to be annotated, and the used UI components need to be bound to the Observables provided by the data binding API. In the following sections an example is shown which uses VIATRA Data Binding.
 
 === Required annotations
 
-* _@ObservableValue_: allows the developer to customize the appearance of a match. It defines an observable value (as defined in JFace databinding) which can be bound to an Eclipse/JFace UI. 
+* _@ObservableValue_: allows the developer to customize the appearance of a match. It defines an observable value (as defined in JFace Data Binding) which can be bound to an Eclipse/JFace UI. 
 ** _name_ (String): the name of the parameter
 ** _expression_ (String): the attribute to be observed definition without '$' marks. For example `@ObservableValue(name = "id", expression = "host.identifier")`
 ** _labelExpression_: this annotation makes it possible to create observable string properties, which are useful when presenting relations between objects inside a JFace viewer component.
@@ -45,7 +45,7 @@ pattern applicationInstances(app: ApplicationInstance) {
 }
 ----
 
-=== Using Databinding to populate a table
+=== Using data binding to populate a table
 
 [[app-listing]]
 [source,java]
@@ -54,7 +54,7 @@ pattern applicationInstances(app: ApplicationInstance) {
 ViatraQueryEngine engine = ViatraQueryEngine.on(new EMFScope(resourceSet));
 //Get the matcher for the query to be observed (HostInstances pattern)
 HostInstancesMatcher matcher = HostInstancesMatcher.on(engine);
-//Create a generic databinding adapter for the query specification
+//Create a generic data binding adapter for the query specification
 //It is responsible for creating observable value properties based on the annotations of the pattern
 GenericDatabindingAdapter adapter = new GenericDatabindingAdapter(HostInstancesMatcher.querySpecification());
 //Bind the matches to the given TableViewer
@@ -74,7 +74,7 @@ ViewerSupport.bind(
 		adapter.getProperty("total_ram") });
 ----
 
-=== Master - detail databinding with a list
+=== Master - detail data binding with a list
 
 The following code fragment is responsible for binding a list to the results of a VIATRA query, and also displays match details in text boxes. (Uses Master-detail binding)
 
@@ -88,7 +88,7 @@ DataBindingContext dataBindingContext = new DataBindingContext();
 ViatraQueryEngine engine = ViatraQueryEngine.on(new EMFScope(resourceSet));
 //Get the matcher for the query to be observed (ApplicationInstances pattern)
 ApplicationInstancesMatcher matcher = ApplicationInstancesMatcher.on(engine);
-//Create a generic databinding adapter for the query specification
+//Create a generic data binding adapter for the query specification
 //It is responsible for creating observable value properties based on the annotations of the pattern
 GenericDatabindingAdapter adapter = new GenericDatabindingAdapter(ApplicationInstancesMatcher.querySpecification());
 //Bind the matches to the given ListViewer
