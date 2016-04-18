@@ -13,18 +13,17 @@ namespace :doc do
   desc 'build basic documentation formats'
   task :build => :prebuild do
     puts "Converting to HTML..."
-      `bundle exec asciidoctor README.asciidoc`
-    puts " -- HTML output at README.html"
+      `bundle exec asciidoctor ViatraDocs.asciidoc`
+    puts " -- HTML output at ViatraDocs.html"
 
     puts "Converting to PDF... (this one takes a while)"
-    `bundle exec asciidoctor-pdf -a pdf-stylesdir=./ -a pdf-style=basic README.asciidoc`
-    puts " -- PDF  output at README.pdf"
+    `bundle exec asciidoctor-pdf -a pdf-stylesdir=./ -a pdf-style=basic ViatraDocs.asciidoc`
+    puts " -- PDF  output at ViatraDocs.pdf"
   end
 
   desc 'clean out generated formats'
   task :clean do
-    `rm README.html`
-    `rm README.pdf`
-    `rm README.pdfmarks`
+    `rm ViatraDocs.html`
+    `rm ViatraDocs.pdf
   end
 end

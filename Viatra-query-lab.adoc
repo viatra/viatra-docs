@@ -4,7 +4,7 @@ ifndef::rootdir[:rootdir: ./]
 ifndef::source-highlighter[:source-highlighter: coderay]
 :imagesdir: {rootdir}
 
-homesite: https://www.eclipse.org/viatra/
+Home page: https://www.eclipse.org/viatra/
 
 == Install Viatra Query
 
