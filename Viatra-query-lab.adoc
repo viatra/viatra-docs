@@ -1,6 +1,7 @@
 = Viatra Query (Pattern Language)
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 ifndef::rootdir[:rootdir: ./]
+ifndef::source-highlighter[:source-highlighter: coderay]
 :imagesdir: {rootdir}
 
 homesite: https://www.eclipse.org/viatra/

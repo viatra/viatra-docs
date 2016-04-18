@@ -9,6 +9,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :chapterdir: .
 :sectnums:
 :sectnumlevels: 4
+:source-highlighter: coderay
+
 
 :chapterdir: .
 

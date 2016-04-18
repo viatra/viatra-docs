@@ -1,4 +1,8 @@
 = VIATRA Visualization
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+ifndef::rootdir[:rootdir: ../]
+ifndef::source-highlighter[:source-highlighter: coderay]
+:imagesdir: {rootdir}
 
 As far as the visualization of VIATRA pattern matching results is concerned, the VIATRA framework provides two approaches:
 

@@ -1,6 +1,7 @@
 = Viatra batch transformations
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 ifndef::rootdir[:rootdir: ./]
+ifndef::source-highlighter[:source-highlighter: coderay]
 :imagesdir: {rootdir}
 
 This exercise helps the audience to create a simple batch transformation using the Viatra Transformation API.
