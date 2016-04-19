@@ -4,48 +4,22 @@ ifndef::rootdir[:rootdir: ./]
 ifndef::source-highlighter[:source-highlighter: coderay]
 :imagesdir: {rootdir}
 
-Home page: https://www.eclipse.org/viatra/
+The VIATRA website describes where to download VIATRA from: https://www.eclipse.org/viatra/downloads.php This tutorial was written for version 1.2 (released on 28th April 2016).
 
-== Install VIATRA Query
+VIATRA is available from the p2 repository at http://download.eclipse.org/viatra/updates/release footnote:[Until 28 April 2016 use the milestone update site: http://download.eclipse.org/viatra/updates/milestone]
 
-Navigate to the home page of VIATRA and search for update sites at the download page: https://www.eclipse.org/viatra/downloads.php
-
-Copy the URL of _Release builds_ update site: http://download.eclipse.org/viatra/updates/release
-
-Before 28 April 2016 use the milestone update site: http://download.eclipse.org/viatra/updates/milestone
-
-Switch back to your Eclipse instance and select the _Help/Install New Software\..._
+To install VIATRA, select the _Help/Install New Software\..._, then paste the copied URL to the _Work with_ field, than press _Enter_. When the view is updated, select the _VIATRA Query and Transformation SDK_. Tick the _Contact all update sites during install\..._ field. Press _Next_, then _Next_ and finally _Finish_.
+After the install process, you should restart Eclipse.
 
 .Select *Help/Install New Software\...*
 image::screenshots/install.png[Select _Help/Install New Software..._]
 
-Paste the copied URL to the _Work with_ field, than press _Enter_. When the view is updated, select the _VIATRA Query and Transformation SDK_. Tick the _Contact all update sites during install\..._ field. Press _Next_, then _Next_ and finally _Finish_.
-After the install process, you should restart Eclipse.
 
 .Install window
 image::screenshots/install2.png[Install window]
 
-For a faster installation, advanced users can untick out the _Contact all update sites during install\..._ field, but they have to install _Xtend_ and _Xtext_ technologies manually.
+For a faster installation, you may deselect out the _Contact all update sites during install\..._ field, but then it is necessary to install the required _Xtext SDK_ manually.
 
-== Setup
+This tutorial relies on the CPS demonstrator example from https://github.com/IncQueryLabs/incquery-examples-cps (for a description of the example please consult https://github.com/IncQueryLabs/incquery-examples-cps/wiki).
 
-. Install `cps.domain` feature from dropins folder
-. Create a new VIATRA Query project in the host Eclipse and name it to `com.incquerylabs.cps.queries`.
-. Add `org.eclipse.viatra.examples.cps.model` to the Plug-in dependencies
-. Create a new query definition in a package named `com.incquerylabs.cps.queries` and a file named `queries.vql`. In the wizard create an empty query. Fill the first query:
-+
-[[app-listing]]
-[source,java]
-.queries.vql
-----
-package com.incquerylabs.cps.queries
-
-import "http://org.eclipse.viatra/model/cps"
-
-pattern hostIpAddress(host: HostInstance, ip) {
-    HostInstance.nodeIp(host,ip);
-}
-----
-. Create and launch an eclipse application with default configuration
-. In the runtime eclipse, import instances project ```models\org.eclipse.viatra.examples.cps.instances```
-. Load the query and the instance model to the **Query Explorer**.
+This document assumes that the metamodels themselves are installed into the Eclipse instance. They are available from the p2 repository https://build.incquerylabs.com/jenkins/job/CPS-Demonstrator/lastSuccessfulBuild/artifact/releng/org.eclipse.viatra.examples.cps.update/target/repository/
