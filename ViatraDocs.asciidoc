@@ -10,6 +10,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :chapterdir: .
 :sectnums:
 :sectnumlevels: 4
+:experimental:
 
 
 :chapterdir: .
