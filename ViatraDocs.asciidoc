@@ -11,11 +11,18 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :sectnums:
 :sectnumlevels: 4
 :experimental:
+:sectlinks:
 
 
 :chapterdir: .
-include::{chapterdir}/Overview.adoc[leveloffset=+1]
-<<<
+== Introduction
+This document contains a tutorial for getting started with the query and transformation development in VIATRA.
+
+The tutorial relies on the CPS Demonstrator application from https://github.com/IncQueryLabs/incquery-examples-cps. The CPS Demonstrator is specified to cover a usual workflow in Model-driven Engineering, where a system is (1) first described in a source model, then (2) automated model-to-model transformations are used to derive a target model. Finally, (3) model-to-text transformation is performed to generate code from the target domain. In addition, a model generator that can automatically create source domain models can support the correctness testing and performance evaluation of the components.
+
+This tutorial uses only a subset of the transformation problem, as its main goal is to illustrate the basics of the VIATRA environment; while a few additional steps were added to illustrate additional capabilities of the framework. Consult the original demonstrator for a more complex transformation example.
+
+This document starts with a <<_the_tutorial_environment,quick setup guide>>, then describes model <<_query_development,query development>>. Both <<_batch_transformations,batch>> and <<_event_driven_transformations,event-driven transformations>> are covered later. Finally, a few <<_advanced_features,advanced features>> such as the <<_viatra_evm_barebone,API of the event-driven virtual machine>> or <<_displaying_query_results_in_the_user_interface,UI integration support>> is introduced shortly.
 
 include::{chapterdir}/Tutorial-environment.adoc[leveloffset=+1]
 
