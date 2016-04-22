@@ -42,13 +42,13 @@ import "http://org.eclipse.viatra/model/cps-traceability"
 
 pattern cps2depTrace(
     cps2dep : CPSToDeployment,
-    trace : CPS2DeplyomentTrace,
+    trace : CPS2DeploymentTrace,
     cpsElement : Identifiable,
     depElement : DeploymentElement
 ) {
     CPSToDeployment.traces(cps2dep, trace);
-    CPS2DeplyomentTrace.cpsElements(trace, cpsElement);
-    CPS2DeplyomentTrace.deploymentElements(trace, depElement);
+    CPS2DeploymentTrace.cpsElements(trace, cpsElement);
+    CPS2DeploymentTrace.deploymentElements(trace, depElement);
 }
 ----
 
@@ -73,21 +73,17 @@ image::screenshots/batch_transformation_wizard_type.png[]
 [[app-listing]]
 [source,java]
 ----
-/*
- * VIATRA Query Pattern group
- */
+/** VIATRA Query Pattern group **/
 val extension CpsXformM2M cpsXformM2M = CpsXformM2M.instance
 
-/*
- * EMF metamodels
- */
+/** EMF metamodels **/
 val extension DeploymentPackage depPackage = DeploymentPackage.eINSTANCE
 val extension TraceabilityPackage trPackage = TraceabilityPackage.eINSTANCE
 ----
 
 * Constructor will also initialize transformation (replace the generated one)
 ** It assumes that the resource and trace models are already created
-** The IModelManipulations implementation is used to make model access replaceable, this way the same transformation may be used for cases where the resource set is transactional
+** The IModelManipulations implementation is used to make model access replaceable, this way the same transformation may be used for cases where the resource set is transactional. The initialization of this is generated automatically into the `createTransformation` method.
 +
 [[app-listing]]
 [source,java]
@@ -103,10 +99,10 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 }
 ----
 
-* Transformation will remain active until dispose is called (there is a generated `dispose` method in the class)
-* Create a rule to create DeploymentHosts for each HostInstances
+* Transformation will remain active until disposed is called (there is a generated `dispose` method in the class)
+* Create a rule to generate DeploymentHosts for each HostInstances
 ** The `BatchTransformationRuleFactory` extension provides a builder API for rule definition
-** A VIATRA query is used as precondition to the rule, which means the rule will be activated each time the given pattern changes allowing to update the output accordingly.
+** A VIATRA query is used as precondition to the rule, which means the rule will be activated each time the given pattern when changes allowing to update the output accordingly.
 +
 [[app-listing]]
 [source,java]
@@ -114,7 +110,7 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 val hostRule = createRule(HostInstanceMatcher.querySpecification)
 ----
 
-* Specify action to run when the rule fires. It will create the transformed `DeploymentHost` element in the output model as well as a trace element associating the source `HostInstance` and the target `DeploymentHost`:
+* Specify which action to run when the rule fires. It will create the transformed `DeploymentHost` element in the output model as well as a trace element associating the source `HostInstance` and the target `DeploymentHost`:
 +
 [[app-listing]]
 [source,java]
@@ -124,22 +120,22 @@ val hostRule = createRule(HostInstanceMatcher.querySpecification)
     val nodeIp = cpsHostInstance.nodeIp
     println('''Mapping host with IP: «nodeIp»''')
 
-    /* Create & initialize DeploymentHost in output model**/
+    /** Create & initialize DeploymentHost in output model **/
     val depHost = cps2dep.deployment.createChild(deployment_Hosts, deploymentHost) => [
         set(deploymentHost_Ip, nodeIp)
     ]
 
-    /* Create trace element in trace model**/
-    cps2dep.createChild(CPSToDeployment_Traces, CPS2DeplyomentTrace) => [
-        addTo(CPS2DeplyomentTrace_CpsElements, cpsHostInstance)
-        addTo(CPS2DeplyomentTrace_DeploymentElements, depHost)
+    /** Create trace element in trace model **/
+    cps2dep.createChild(CPSToDeployment_Traces, CPS2DeploymentTrace) => [
+        addTo(CPS2DeploymentTrace_CpsElements, cpsHostInstance)
+        addTo(CPS2DeploymentTrace_DeploymentElements, depHost)
     ]
 
     println('''Mapped with IP: «nodeIp»''')
 ]
 ----
 
-* The rule which create `DeploymentApplication` elements for `ApplicationInstance`s, looks similar. It has to find the `DeploymentHost` created from the `HostInstance` to which the source `ApplicationInstance` is allocated, so it assumes the `hostRule` has already fired:
+* The rule which creates `DeploymentApplication` elements for `ApplicationInstance` objects, looks similar. It has to find the `DeploymentHost` created from the `HostInstance` to which the source `ApplicationInstance` is allocated, so it assumes the `hostRule` has already fired:
 +
 [[app-listing]]
 [source,java]
@@ -158,9 +154,9 @@ val applicationRule = createRule(ApplicationInstanceMatcher.querySpecification) 
     ]
 
     /* Create trace element in trace model */
-    cps2dep.createChild(CPSToDeployment_Traces, CPS2DeplyomentTrace) => [
-        addTo(CPS2DeplyomentTrace_CpsElements, cpsApplicationInstance)
-        addTo(CPS2DeplyomentTrace_DeploymentElements, deploymentApplication)
+    cps2dep.createChild(CPSToDeployment_Traces, CPS2DeploymentTrace) => [
+        addTo(CPS2DeploymentTrace_CpsElements, cpsApplicationInstance)
+        addTo(CPS2DeploymentTrace_DeploymentElements, deploymentApplication)
     ]
 
     println('''Mapped application with ID: «appId»''')
@@ -271,9 +267,9 @@ public class TransformHandler extends AbstractHandler implements IHandler {
 
 == Execute the transformation
 
-* Launch runtime eclipse
+* Launch _Eclipse Application_
 * Create a generic resource project
-* Copy a `.cyberphysicalsystem` resource in it
+* Copy a `.cyberphysicalsystem` resource in it if you already have one, or create a new _CaberPhysicalSystem Model_
 +
 .Project with a .cyberphysicalsystem resource
 image::screenshots/viatraIncr_example1.png[]

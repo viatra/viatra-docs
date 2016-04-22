@@ -3,10 +3,11 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 ifndef::rootdir[:rootdir: ./]
 ifndef::source-highlighter[:source-highlighter: coderay]
 :imagesdir: {rootdir}
+:experimental:
 
-== Define the First Query
+== Define your First Query
 
-. Create a new VIATRA Query project in the host Eclipse and name it to `com.incquerylabs.cps.queries`.
+. Create a new VIATRA Query project in the host Eclipse with the following name: `com.incquerylabs.cps.queries`.
 . Add `org.eclipse.viatra.examples.cps.model` to the Plug-in dependencies
 . Create a new query definition in a package named `com.incquerylabs.cps.queries` and a file named `queries.vql`. In the wizard create an empty query. Fill the first query:
 +
@@ -28,7 +29,7 @@ pattern hostIpAddress(host: HostInstance, ip) {
 
 == Query Explorer
 
-*Query Explorer* is the primary debug tool for debugging VIATRA Query patterns runtime. To open the view: _Window/Show View/Others/VIATRA/Query Explorer_ or you can simply press the kbd:[CTRL+3] shortcut and start to type the name of the view. On the left side of the view, there will be patterns inherited from  the host eclipse. The middle part will show you the matches of the patterns. To achieve this, we have to load a model into the view:
+*Query Explorer* is the primary debug tool for debugging VIATRA Query patterns runtime. Open the view by selecting _Window/Show View/Others/VIATRA/Query Explorer_ or you can simply press the kbd:[CTRL+3] shortcut and start to type the name of the view. On the left side of the view, there will be patterns inherited from  the host eclipse. The middle part will show you the matches of the patterns. To achieve this, we have to load a model into the view:
 
 . Open our example instance model (/org.eclipse.viatra.examples.cps.instances/example.cyberphysicalsystem)
 . Make sure "ReteEngine" is selected in the Query Explorer (next to the green arrow button)
@@ -41,9 +42,9 @@ image::screenshots/query_explorer.png[Query Explorer]
 
 == Pattern Language
 
-As you can see, every pattern have a unique name and several parameters. Inside the body of the patterns, there different constraints. Our first example describes a feature constraint. It states that `entity` variable is of eClass `Entity` and its `name` attribute is the value of `name` variable.
+Every pattern has a unique name and several parameters. Inside the body of the patterns, there are different constraints. Our first example describes a feature constraint. It states that `entity` variable is of class `Entity` and its `name` attribute is the value of `name` variable.
 
-. Create a query to the *Validate* that checks if the ip address of a `HostInstance` is only an empty string:
+. Create a validation query that checks if the IP address of a `HostInstance` is only an empty string:
 +
 [[app-listing]]
 [source,java]
@@ -53,9 +54,9 @@ pattern emptyIpAddress(host: HostInstance) {
 }
 ----
 +
-This pattern shows, that the parameters can be typed immediately in the parameters list.
+This pattern shows that the parameters can be typed immediately in the parameters list.
 
-. Create a query to the *Validate* that checks if two hosts has the same ip:
+. Create a validation query that checks if two hosts has the same IP:
 +
 [[app-listing]]
 [source,java]
@@ -69,7 +70,7 @@ pattern sameIpAddress(host1, hist2, commonIp) {
 +
 This pattern shows the `!=` (_not equal_) operator to select two different entities from the instance model. (Use the `==` operator to equality)
 
-. Create a query to the *Validate* that checks if the ip address contains only numbers and dots:
+. Create a validation query that checks if the ip address contains only numbers and dots:
 +
 [[app-listing]]
 [source,java]
@@ -82,9 +83,9 @@ pattern ipFormatInvalid(host) {
 }
 ----
 +
-This pattern shows the `check` block where you can write a wide range of _Xbase_ expressions (similar to Java). In this case, we define a regular expression. It is important to note that check expressions *must* be side-effect free and can only be called on attribute variables
+This pattern shows the `check` block where you can write a wide range of _Xbase_ expressions (similar to Java). In this case, we define a regular expression. It is important to note that check expressions *have to* be side-effect free and can only be called on attribute variables
 
-. Create a query to the *Support* that gets the other ending of a relation ending:
+. Create a query that gets the other ending of a relation ending:
 +
 [[app-listing]]
 [source,java]
@@ -98,9 +99,9 @@ pattern connectedTo(state: State, other: State){
 }
 ----
 +
-This pattern shows how to connect independent bodies in a pattern. To do this, we use the `or` keyword that states the pattern has a match if the first _or_ the second _or_ the third _or_ etc body has a match.
+This pattern shows how to connect independent bodies in a pattern by using the `or` keyword that states the pattern has a match if the first _or_ the second _or_ the third _or_ etc body has a match.
 
-. Create a query to the *Support* that summarizes this three validation condition:
+. Create a query that summarizes this three validation condition:
 +
 [[app-listing]]
 [source,java]
@@ -108,30 +109,30 @@ This pattern shows how to connect independent bodies in a pattern. To do this, w
 pattern badHost(host, ip) {
     find sameIpAddress(host, _other, ip);
 } or {
-    HostInstance.nodeIp(host,ip);
+    HostInstance.nodeIp(host, ip);
     find emptyIpAddress(host);
 } or {
-    HostInstance.nodeIp(host,ip);
+    HostInstance.nodeIp(host, ip);
     find ipFormatInvalid(host);
 }
 ----
 +
 This pattern shows how to reuse previously defined patterns as sub patterns. To do this, we use the `find` keyword then write the id of the sub pattern and finally add the variables. (Variables starting with `___` define _don't care_ variables, hence you cannot use them in other lines of the pattern)
 
-. Create a query to the *Support* that matches to the valid hosts:
+. Create a query that matches to the valid hosts:
 +
 [[app-listing]]
 [source,java]
 ----
 pattern goodEntity(host, ip) {
-    HostInstance.nodeIp(host,ip);
-   neg find badHost(host,_);
+    HostInstance.nodeIp(host, ip);
+    neg find badHost(host, _);
 }
 ----
 +
-This pattern shows `neg find` expression to express negation. Those actual parameters of the negative pattern call that are not used elsewhere in the calling body will be quantified; this means that the calling pattern only matches if no substitution of these calling variables could be found.
+This pattern shows `neg find` expression to express negation. Those actual parameters of the negative pattern call that are not used elsewhere in the calling body will be quantified; this means that the calling pattern only matches if variables of the calling pattern cannot be bound to matching elements.
 
-. Create a query to the *Support* that counts the number of attributes of an entity:
+. Create a query that counts the number of attributes of an entity:
 +
 [[app-listing]]
 [source,java]

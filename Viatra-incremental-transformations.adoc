@@ -36,8 +36,8 @@ pattern allocatedDeploymentApplication(depHost, depApp) {
 ----
 pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
     CPSToDeployment.traces(cps2dep, trace);
-    CPS2DeplyomentTrace.cpsElements(trace, cpsElement);
-    CPS2DeplyomentTrace.deploymentElements(trace, depElement);
+    CPS2DeploymentTrace.cpsElements(trace, cpsElement);
+    CPS2DeploymentTrace.deploymentElements(trace, depElement);
 }
 ----
 
@@ -118,9 +118,9 @@ val hostRule = createRule.precondition(HostInstanceMatcher.querySpecification)
         set(deploymentHost_Ip, nodeIp)
     ]
     /* Create trace entry */
-    cps2dep.createChild(CPSToDeployment_Traces, CPS2DeplyomentTrace) => [
-        addTo(CPS2DeplyomentTrace_CpsElements, hostinstance)
-        addTo(CPS2DeplyomentTrace_DeploymentElements, host)
+    cps2dep.createChild(CPSToDeployment_Traces, CPS2DeploymentTrace) => [
+        addTo(CPS2DeploymentTrace_CpsElements, hostinstance)
+        addTo(CPS2DeploymentTrace_DeploymentElements, host)
     ]
 ]
 ----
@@ -190,9 +190,9 @@ val applicationRule = createRule.precondition(ApplicationInstanceMatcher.querySp
         set(deploymentApplication_Id, appId)
     ]
     /* create trace entry */
-    cps2dep.createChild(CPSToDeployment_Traces, CPS2DeplyomentTrace) => [
-        addTo(CPS2DeplyomentTrace_CpsElements, appinstance)
-        addTo(CPS2DeplyomentTrace_DeploymentElements, app)
+    cps2dep.createChild(CPSToDeployment_Traces, CPS2DeploymentTrace) => [
+        addTo(CPS2DeploymentTrace_CpsElements, appinstance)
+        addTo(CPS2DeploymentTrace_DeploymentElements, app)
     ]
     println('''Mapped application with ID: «appId»''')
 ].action(CRUDActivationStateEnum.UPDATED) [
@@ -203,8 +203,8 @@ val applicationRule = createRule.precondition(ApplicationInstanceMatcher.querySp
     if (depApp.id != appInstance.identifier)
         depApp.set(deploymentApplication_Id, appInstance.identifier)
 ].action(CRUDActivationStateEnum.DELETED) [
-    /* find associated DeplyomentApplication */
-    val trace = engine.cps2depTrace.getAllValuesOftrace(null, appInstance, null).head as CPS2DeplyomentTrace
+    /* find associated DeploymentApplication */
+    val trace = engine.cps2depTrace.getAllValuesOftrace(null, appInstance, null).head as CPS2DeploymentTrace
     val depApp = trace.deploymentElements.head as DeploymentApplication
     /* Remove application from host */
     engine.allocatedDeploymentApplication.getAllValuesOfdepHost(depApp).head.remove(deploymentHost_Applications, depApp)

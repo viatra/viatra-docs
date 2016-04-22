@@ -1,4 +1,5 @@
-= The tutorial environment
+[[environment]]
+= Setting up the tutorial
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 ifndef::rootdir[:rootdir: ./]
 ifndef::source-highlighter[:source-highlighter: coderay]
@@ -18,7 +19,7 @@ image::screenshots/install.png[Select _Help/Install New Software..._]
 .Install window
 image::screenshots/install2.png[Install window]
 
-For a faster installation, you may deselect out the _Contact all update sites during install\..._ field, but then it is necessary to install the required _Xtext SDK_ manually.
+For a faster installation, you may deselect the _Contact all update sites during install\..._ field, but then it is necessary to install the required _Xtext SDK_ manually.
 
 This tutorial relies on the CPS demonstrator example from https://github.com/IncQueryLabs/incquery-examples-cps (for a description of the example please consult https://github.com/IncQueryLabs/incquery-examples-cps/wiki).
 

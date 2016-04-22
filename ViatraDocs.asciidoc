@@ -22,8 +22,9 @@ The tutorial relies on the CPS Demonstrator application from https://github.com/
 
 This tutorial uses only a subset of the transformation problem, as its main goal is to illustrate the basics of the VIATRA environment; while a few additional steps were added to illustrate additional capabilities of the framework. Consult the original demonstrator for a more complex transformation example.
 
-This document starts with a <<_the_tutorial_environment,quick setup guide>>, then describes model <<_query_development,query development>>. Both <<_batch_transformations,batch>> and <<_event_driven_transformations,event-driven transformations>> are covered later. Finally, a few <<_advanced_features,advanced features>> such as the <<_viatra_evm_barebone,API of the event-driven virtual machine>> or <<_displaying_query_results_in_the_user_interface,UI integration support>> is introduced shortly.
+This document starts with a <<environment,quick setup guide>>, then describes model <<_query_development,query development>>. Both <<_batch_transformations,batch>> and <<_event_driven_transformations,event-driven transformations>> are covered later. Finally, a few <<_advanced_features,advanced features>> such as the <<_viatra_evm_barebone,API of the event-driven virtual machine>> or <<_displaying_query_results_in_the_user_interface,UI integration support>> is introduced shortly.
 
+<<<
 include::{chapterdir}/Tutorial-environment.adoc[leveloffset=+1]
 
 <<<
