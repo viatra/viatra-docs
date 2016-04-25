@@ -130,7 +130,7 @@ pattern goodEntity(host, ip) {
 }
 ----
 +
-This pattern shows `neg find` expression to express negation. Those actual parameters of the negative pattern call that are not used elsewhere in the calling body will be quantified; this means that the calling pattern only matches if variables of the calling pattern cannot be bound to matching elements.
+This pattern shows `neg find` expression to express negation. Those actual parameters of the negative pattern call that are not used elsewhere in the calling body are universally quantified, meaning that the calling pattern only matches if variables of the calling pattern cannot be bound to matching elements.
 
 . Create a query that counts the number of attributes of an entity:
 +

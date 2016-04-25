@@ -10,7 +10,7 @@ This exercise heps the audience to create a simple event-driven transformation u
 
 * Create VIATRA Query project
 ** Create Queries:
-*** For source model  
+*** For source model
 +
 [[app-listing]]
 [source,java]
@@ -223,12 +223,12 @@ val applicationRule = createRule.precondition(ApplicationInstanceMatcher.querySp
 private def createTransformation() {
     //Initialize model manipulation API
     this.manipulation = new SimpleModelManipulations(engine)
-    
+
     //Initialize event-driven transformation
     val fixedPriorityResolver = new InvertedDisappearancePriorityConflictResolver
     fixedPriorityResolver.setPriority(hostRule.ruleSpecification, 1)
     fixedPriorityResolver.setPriority(applicationRule.ruleSpecification, 2)
-    
+
     transformation = EventDrivenTransformation.forEngine(engine)
         .setConflictResolver(fixedPriorityResolver)
         .addRule(hostRule)
@@ -282,7 +282,7 @@ public class ToggleTransformationHandler extends AbstractHandler implements IHan
                                 new EMFScope(
                                     tracemodel.eResource()
                                                 .getResourceSet()));
-                    transformation = 
+                    transformation =
                         new CPS2DeploymentTransformationViatra(tracemodel,
                                                                 engine);
                 } catch (ViatraQueryException e) {
@@ -369,3 +369,8 @@ image::screenshots/viatraIncr_example5.png[]
 image::screenshots/viatraIncr_example6.png[]
 
 * Initial activation done on first modification of the input model, e.g. create a new HostType
+
+== References
+
+* VIATRA Transformation API: https://wiki.eclipse.org/VIATRA/Transformation/Transformation_API
+* Further transformation examples: https://wiki.eclipse.org/VIATRA/Transformation/Examples
