@@ -5,51 +5,54 @@ ifndef::source-highlighter[:source-highlighter: coderay]
 :imagesdir: {rootdir}
 
 == Debugging model transformations
-The development and debugging of reactive event-driven model transformations is not a trivial exercise, the basic concepts of software debugging however can be mapped to the field of  model transformations. Debuggers can be used for detecting bugs, as well as better understanding the structure and behavior of programs. Direct control over a program allows the programmer to follow the flow of execution or stop the program at any desired point. Then it is possible to inspect its current state and verify the correctness of the software. These properties are very desirable in the field of model transformations as well. The VIATRA framework posesses such a debugger framework.
+The development and debugging of  model transformations is not a trivial exercise, the basic concepts of software debugging however can be mapped to this field as well. Debuggers can be used for detecting bugs, as well as better understanding the structure and behavior of programs. Direct control over a program allows the programmer to follow the flow of execution or stop the program at any desired point. Then it is possible to inspect its current state and verify the correctness of the software. These properties are very desirable in the field of model transformations too. The VIATRA framework posesses such a debugger framework.
 
 == Transformation adapter framework
-A full featured transformation debugger requires a software solution that is able to observe and control VIATRA-based model transformations. Such an extension is able to insert additional functionality into certain points during model transformations. The transformation adapter framework allows the definition of additional functionalities that are executed at certain points in event-driven model transformations. The previously described debug functionalities are implemented using the transformation adapter framework.
+A full featured transformation debugger requires a software solution that is able to observe and control model transformations. Such an extension is able to insert additional functionality into certain points during model transformations. The transformation adapter framework allows the definition of additional functionalities that are executed at certain points in event-driven model transformations. The previously described debug functionalities are implemented using the transformation adapter framework.
 
 .Adapter Framework
 image::extra/images/adapter_framework.png[Adapter Framework]
 
-* _Adapter Interface_: The Adapter Interface defines a set of callback methods that are executed at certain points during the transformation execution. A number of Adapters can implement this interface, in order to define additional functionality that should be undertaken at certain points in the transformation.
-* _Adaptable Executor_: VIATRA Executors are responsible for executing model transformation rule actions provided by rule activations. The adaptable executor extends these default executors, and allows the transformation developer to register a number of adapter in-stances and calls the appropriate callback method of each adapter at certain points during execution. These Adaptable Executor instances are added to VIATRA event-driven trans-formations, which only utilizes their EVM Executor interface. This means, that this adapter-based implementation is completely transparent towards the transformation code, and the internal VIATRA components as well.
-* _Adaptable Executor Factory_: Responsible for creating adaptable executors
+* _Adapter Interface_: The Adapter Interface defines a set of callback methods that are executed at certain points during the transformation execution. These actions are capable of altering the execution sequence of transformation rules. A number of Adapters can implement this interface, in order to define additional functionality that should be undertaken at certain points in the transformation.
+* _Listener Interface_: The Listener Interface defines a set of callback methods that are executed at certain points during the transformation execution. The actions defined in these methods can have no effect on the transformation itself, purely aim at providing a solution to listening to certain transformation-related events. A number of Adapters can implement this interface, in order to define additional functionality that should be undertaken at certain points in the transformation.
+* _Adaptable EVM_: The Adaptable EVM is responsible aggregating the used Adapter and Listener instances and delegates the callback method calls from the internal VIATRA objects towards the appropriate callback method of each adapter or listener at certain points during execution. The Adaptable EVM is also responsible for setting up VIATRA transformation to utilize adapters.
 * _Adapter Configuration_: The adapter configurations serve multiple purposes. They can either define dependency relations between adapter imple-mentations, or specify complex use cases which requires more than one adapter to func-tion properly
 
-The Adapter Framework provides a generic, easy-to-use technique for creating user defined adapter implementations. The Adapter Framework is utilized in order to implement a set of debugging-related use cases.
+The Adapter Framework provides a generic, easy-to-use technique for creating user defined adapter and listener implementations. The Adapter Framework is utilized in order to implement a set of debugging-related use cases.
 
-=== Debug adapter
-The debug adapter implements a breakpoint based debugging approach (similar to JDT). It contains the logic for stopping the transformation execution if a breakpoint condition matches, and ordering the UI to display the program context.To support various debugging use cases, the debugger can be configured with different user interface and breakpoint implementations.
+=== Debugger
+The VIATRA transformation debugger implements a breakpoint based debugging approach (similar to JDT). It contains the logic for stopping the transformation execution if a breakpoint condition matches, and ordering the UI to display the program context.To support various debugging use cases, the debugger can be configured with different user interface and breakpoint implementations. in order to implement this funfctionality, the debugger uses the components depicted on the figure below.
 
 .Debug Adapter
 image::extra/images/debug_adapter.png[Debug Adapter]
 
-* _Debugger UI_: Responsible for displaying the internal state of the event-driven model transformation in progress, and it allows the transformation developer to manipulate the execution sequence. Using this component enables the transformation debugger component to remain UI independent, and support the definition of custom user interface implementations.
+* _Transformation Debug Listener_: Repsonsible for displaying the state of the VIATRA transformation using a specific Debugger UI.
+* _Transformation Debug Adapter_: Responsible for halting the execution of the transformation if a breakpoint is reached. Once the breakpoint is encountered, it allows the user to select the next action to be taken via the Debugger UI.
+* _Debugger UI_: Responsible for displaying the internal state of the model transformation in progress, and it allows the transformation developer to manipulate the execution sequence. Using this component enables the transformation debugger component to remain UI independent, and support the definition of custom user interface implementations.
 ** _Console Debugger UI_: This default UI implementation uses the standard input and output in order to communicate with the transformation developer.
 ** _VIATRA Viewers Debugger UI_: In this case the VIATRA  Viewers framework is utilized to visualize the target and source model state via using annotated VIATRA queries.
 * _Breakpoints_: Each breakpoint realization compares a given activation to a set of constraints. If the constraints match, the debugger is informed that it should halt the execution of the transformation, and wait for a response from the transformation developer.
 ** _Rule Activation Breakpoints_: Contains references to a transformation rule, a lifecycle state, and a set of source model elements that have triggered the activation. This way the debugger can check if the activation being fired has a breakpoint attached to it or not.
 ** _Conditional Breakpoints_: These breakpoints are able to define global constraints that are not only affected by the current activation. A similar concept is available in the Eclipse Java Development Tools (JDT). The constraints are defined by using the VIATRA query language.
+* _Transformation Debugger Configuration_: This configuration binds the transformation debug adapter and listenercomponents together and allows a more straightforward usage.
   
 
 === Manual conflict resolver adapter
 
 This adapter allows the transformation developer to manually override the execution order of transformation rule activations. Particularly useful during debugging, as allows the easy reproduction of bugs, which require a certain firing order. It uses the similar interchangeable Debugger UI component as the Debug adapter.
 
-.Manual Conflict Adapter
+.Manual Conflict Resolver Adapter
 image::extra/images/mc_adapter.png[Manual Conflict Adapter]
 
-=== Trace coder adapter
+=== Trace coder listener
 
-The transformation debug adapter implements a transformation debugger that follows the breakpoint-based approach. However, the execution sequence of VIATRA-based event-driven model transformations is typically non-deterministic. The trace coder adapter is responsible for logging the transformation execution sequence (i.e.: order of transformation rule activation firings). This _transformation trace_ can later be analyzed or used during re-execution of the transformation.
+The transformation debug configuration contains a transformation debugger that follows the breakpoint-based approach. However, the execution sequence of VIATRA-based event-driven model transformations is typically non-deterministic. The trace coder is responsible for logging the transformation execution sequence (i.e.: order of transformation rule activation firings). This _transformation trace_ can later be analyzed or used during re-execution of the transformation.
 
 Transformation traces are hierarchical object structures aiming at storing transformation execution sequences. Transformation traces consist of activation and rule parameter traces. Activation traces identify the fired rule, and rule parameter traces specify which elements have triggered the execution of the given rule. Based on this information, the transformation can be re-executed for further evaluation, or erroneous rules can be detected during post mortem analysis.
 
-Similar to the previously introduced adapters, the trace coder adapter utilizes interchangeable subcomponents:
+Similar to the previously introduced components, the trace coder listener utilizes interchangeable subcomponents:
 
-.Trace Coder Adapter
+.Transformation Trace Listener Adapter
 image::extra/images/coder_adapter.png[Trace Coder Adapter]
 
 * _Activation coder_: Creates Activation Trace objects, using the parameters extracted from the activation object.
@@ -60,7 +63,7 @@ image::extra/images/coder_adapter.png[Trace Coder Adapter]
 This adapter is responsible for re-executing a transformation sequence recorded by the trace coder adapter. Particularly useful during debugging, as it allows the determinization of the otherwise random execution sequence of VIATRA event-driven transformations. 
 It operates the following way: as the transformation is being executed, the activation at hand is compared to the upcoming entry in a previously loaded transformation trace. If the activation matches the trace record, it is executed, if not the executor finds the matching one.
 
-.Trace Executor Adapter
+.Transformation Trace Executor Adapter
 image::extra/images/executor_adapter.png[Trace Executor Adapter]
 
 As seen here, the trace executor component utilizes the same sub-components as the trace coder.
