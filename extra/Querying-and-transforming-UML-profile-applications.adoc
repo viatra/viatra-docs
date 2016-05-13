@@ -4,11 +4,6 @@ ifndef::rootdir[:rootdir: ../]
 ifndef::source-highlighter[:source-highlighter: coderay]
 :imagesdir: {rootdir}
 
-* Import the following CPS projects:
-** org.eclipse.viatra.examples.cps.xform.m2m.util
-** org.eclipse.viatra.examples.cps.tests
-** org.eclipse.viatra.examples.cps.generator
-** org.eclipse.viatra.examples.cps.planexecutor
 * Create static profile
 ** Open profile
 ** Under Properties > Profile, add Applied stereotype EPackage
