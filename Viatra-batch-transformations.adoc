@@ -1,7 +1,9 @@
 = Batch Transformations
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 ifndef::rootdir[:rootdir: ./]
-ifndef::source-highlighter[:source-highlighter: coderay]
+ifndef::source-highlighter[:source-highlighter: highlightjs]
+ifndef::highlightjsdir[:highlightjsdir: {rootdir}/highlight.js]
+ifndef::highlightjs-theme[:highlightjs-theme: tomorrow]
 :imagesdir: {rootdir}
 
 This exercise helps the audience to create a simple batch transformation using the VIATRA Transformation API.
@@ -15,7 +17,7 @@ The exercise also covers registering a menu command which initializes the transf
 *** For source model:
 +
 [[app-listing]]
-[source,java]
+[source,vql]
 ----
 import "http://org.eclipse.viatra/model/cps"
 
@@ -35,7 +37,7 @@ pattern applicationInstance(
 *** For traceability model:
 +
 [[app-listing]]
-[source,java]
+[source,vql]
 ----
 import "http://org.eclipse.viatra/model/deployment"
 import "http://org.eclipse.viatra/model/cps-traceability"

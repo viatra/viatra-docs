@@ -1,7 +1,9 @@
 = Using Queries Programmatically
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 ifndef::rootdir[:rootdir: ../]
-ifndef::source-highlighter[:source-highlighter: coderay]
+ifndef::source-highlighter[:source-highlighter: highlightjs]
+ifndef::highlightjsdir[:highlightjsdir: {rootdir}/highlight.js]
+ifndef::highlightjs-theme[:highlightjs-theme: tomorrow]
 :imagesdir: {rootdir}
 
 == Managed Engine
@@ -60,7 +62,7 @@ val scope = new EMFScope(resource)
 val engine = AdvancedViatraQueryEngine.createUnmanagedEngine(scope)
 
 val hostInstancesMatcher = exampleQueries.getHostInstancesForIP(engine)
-val hostInstanceMatch = 
+val hostInstanceMatch =
         hostInstancesMatcher.getOneArbitraryMatch(null, SEARCHED_IP)
 val searchedHost = hostInstanceMatch.hostInstance
 
@@ -93,7 +95,7 @@ extension val exampleQueries = ExampleQueries.instance
 val scope = new EMFScope(resource)
 val engine = AdvancedViatraQueryEngine.createUnmanagedEngine(scope)
 val hint = new QueryEvaluationHint(
-                LocalSearchBackendFactory.INSTANCE, 
+                LocalSearchBackendFactory.INSTANCE,
                 #{LocalSearchHintKeys.USE_BASE_INDEX -> false}
 )
 

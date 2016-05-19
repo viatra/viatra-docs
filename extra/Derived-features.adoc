@@ -1,7 +1,9 @@
 = Derived features
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 ifndef::rootdir[:rootdir: ../]
-ifndef::source-highlighter[:source-highlighter: coderay]
+ifndef::source-highlighter[:source-highlighter: highlightjs]
+ifndef::highlightjsdir[:highlightjsdir: {rootdir}/highlight.js]
+ifndef::highlightjs-theme[:highlightjs-theme: tomorrow]
 :imagesdir: {rootdir}
 
 To define a derived feature in your EMF metamodel, you have set the following attributes of the feature:
@@ -28,7 +30,7 @@ For example:
 Extend our metamodel with following _connectedTo_ reference of the `State` eClass and set the required properties.
 
 [[app-listing]]
-[source,Java]
+[source,vql]
 ----
 @QueryBasedFeature
 pattern connectedTo(state: State, other: State){
