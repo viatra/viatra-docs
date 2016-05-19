@@ -23,7 +23,7 @@ VIATRA provides a simple data binding facility that can be used to bind pattern 
 ** _labelExpression_: this annotation makes it possible to create observable string properties, which are useful when presenting relations between objects inside a JFace viewer component.
 
 [[app-listing]]
-[source,java]
+[source,vql]
 ----
 @ObservableValue(name = "id", expression = "host.identifier")
 @ObservableValue(name = "node_ip", expression = "host.nodeIp")
@@ -138,7 +138,7 @@ In order to use the VIATRA Viewers addon the following steps need to be undertak
 === Pattern Annotations
 
 [[app-listing]]
-[source,java]
+[source,vql]
 ----
 //Host Type objects will be nodes of the displayed graph
 @Item(item = host, label = "$host.identifier$")

@@ -14,7 +14,7 @@ ifndef::highlightjs-theme[:highlightjs-theme: tomorrow]
 . Create a new query definition in a package named `com.incquerylabs.cps.queries` and a file named `queries.vql`. In the wizard create an empty query. Fill the first query:
 +
 [[app-listing]]
-[source,java]
+[source,vql]
 .queries.vql
 ----
 package com.incquerylabs.cps.queries
@@ -49,7 +49,7 @@ Every pattern has a unique name and several parameters. Inside the body of the p
 . Create a validation query that checks if the IP address of a `HostInstance` is only an empty string:
 +
 [[app-listing]]
-[source,java]
+[source,vql]
 ----
 pattern emptyIpAddress(host: HostInstance) {
     HostInstance.nodeIp(host, "");
@@ -61,7 +61,7 @@ This pattern shows that the parameters can be typed immediately in the parameter
 . Create a validation query that checks if two hosts has the same IP:
 +
 [[app-listing]]
-[source,java]
+[source,vql]
 ----
 pattern sameIpAddress(host1, hist2, commonIp) {
     HostInstance.nodeIp(host1, commonIp);
@@ -75,7 +75,7 @@ This pattern shows the `!=` (_not equal_) operator to select two different entit
 . Create a validation query that checks if the ip address contains only numbers and dots:
 +
 [[app-listing]]
-[source,java]
+[source,vql]
 ----
 pattern ipFormatInvalid(host) {
     HostInstance.nodeIp(host,ip);
@@ -90,7 +90,7 @@ This pattern shows the `check` block where you can write a wide range of _Xbase_
 . Create a query that gets the other ending of a relation ending:
 +
 [[app-listing]]
-[source,java]
+[source,vql]
 ----
 pattern connectedTo(state: State, other: State){
     State.outgoingTransitions(state, transition);
@@ -106,7 +106,7 @@ This pattern shows how to connect independent bodies in a pattern by using the `
 . Create a query that summarizes this three validation condition:
 +
 [[app-listing]]
-[source,java]
+[source,vql]
 ----
 pattern badHost(host, ip) {
     find sameIpAddress(host, _other, ip);
@@ -124,7 +124,7 @@ This pattern shows how to reuse previously defined patterns as sub patterns. To 
 . Create a query that matches to the valid hosts:
 +
 [[app-listing]]
-[source,java]
+[source,vql]
 ----
 pattern goodEntity(host, ip) {
     HostInstance.nodeIp(host, ip);
@@ -137,7 +137,7 @@ This pattern shows `neg find` expression to express negation. Those actual param
 . Create a query that counts the number of attributes of an entity:
 +
 [[app-listing]]
-[source,java]
+[source,vql]
 ----
 pattern applications(host, app) {
     HostInstance.applications(host, app);
@@ -168,7 +168,7 @@ To find a specific editor id, we can use the _Plug-in Selection Spy_ tool with a
 For example:
 
 [[app-listing]]
-[source,java]
+[source,vql]
 ----
 @Constraint(targetEditorId = "org.eclipse.viatra.examples.cps.cyberPhysicalSystem.presentation.CyberPhysicalSystemEditorID",
             severity = "error",
@@ -186,7 +186,7 @@ pattern sameIpAddress(host1: HostInstance, host2: HostInstance, commonIp) {
 . Create *Support* pattern:
 +
 [[app-listing]]
-[source,java]
+[source,vql]
 ----
 private pattern directReachable(state: State, other: State){
     State.outgoingTransitions(state, transition);
@@ -197,7 +197,7 @@ private pattern directReachable(state: State, other: State){
 . Create a pattern that determines the transitive closure of reachable states:
 +
 [[app-listing]]
-[source,java]
+[source,vql]
 ----
 private pattern reachable(state: State, other: State){
     find directReachable+(state, other);

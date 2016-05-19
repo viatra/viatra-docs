@@ -15,7 +15,7 @@ This exercise heps the audience to create a simple event-driven transformation u
 *** For source model
 +
 [[app-listing]]
-[source,java]
+[source,vql]
 ----
 pattern hostInstance(hostInstance) {
     HostInstance(hostInstance);
@@ -34,7 +34,7 @@ pattern allocatedDeploymentApplication(depHost, depApp) {
 *** For traceability model:
 +
 [[app-listing]]
-[source,java]
+[source,vql]
 ----
 pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
     CPSToDeployment.traces(cps2dep, trace);

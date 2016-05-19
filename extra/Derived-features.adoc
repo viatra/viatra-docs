@@ -30,7 +30,7 @@ For example:
 Extend our metamodel with following _connectedTo_ reference of the `State` eClass and set the required properties.
 
 [[app-listing]]
-[source,Java]
+[source,vql]
 ----
 @QueryBasedFeature
 pattern connectedTo(state: State, other: State){

@@ -17,7 +17,7 @@ The exercise also covers registering a menu command which initializes the transf
 *** For source model:
 +
 [[app-listing]]
-[source,java]
+[source,vql]
 ----
 import "http://org.eclipse.viatra/model/cps"
 
@@ -37,7 +37,7 @@ pattern applicationInstance(
 *** For traceability model:
 +
 [[app-listing]]
-[source,java]
+[source,vql]
 ----
 import "http://org.eclipse.viatra/model/deployment"
 import "http://org.eclipse.viatra/model/cps-traceability"
