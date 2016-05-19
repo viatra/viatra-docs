@@ -1,9 +1,9 @@
 = Displaying Query Results in the User Interface
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 ifndef::rootdir[:rootdir: ../]
-:source-highlighter: highlightjs
-:highlightjsdir: {rootdir}/highlight.js
-:highlightjs-theme: tomorrow
+ifndef::source-highlighter[:source-highlighter: highlightjs]
+ifndef::highlightjsdir[:highlightjsdir: {rootdir}/highlight.js]
+ifndef::highlightjs-theme[:highlightjs-theme: tomorrow]
 :imagesdir: {rootdir}
 
 As far as the visualization of VIATRA pattern matching results is concerned, the VIATRA framework provides two approaches:

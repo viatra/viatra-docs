@@ -2,9 +2,9 @@
 = Setting up the tutorial
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 ifndef::rootdir[:rootdir: ./]
-:source-highlighter: highlightjs
-:highlightjsdir: {rootdir}/highlight.js
-:highlightjs-theme: tomorrow
+ifndef::source-highlighter[:source-highlighter: highlightjs]
+ifndef::highlightjsdir[:highlightjsdir: {rootdir}/highlight.js]
+ifndef::highlightjs-theme[:highlightjs-theme: tomorrow]
 :imagesdir: {rootdir}
 
 The VIATRA website describes where to download VIATRA from: https://www.eclipse.org/viatra/downloads.php This tutorial was written for version 1.2 (released on 28th April 2016).
