@@ -1,7 +1,9 @@
 = Displaying Query Results in the User Interface
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 ifndef::rootdir[:rootdir: ../]
-ifndef::source-highlighter[:source-highlighter: coderay]
+:source-highlighter: highlightjs
+:highlightjsdir: {rootdir}/highlight.js
+:highlightjs-theme: tomorrow
 :imagesdir: {rootdir}
 
 As far as the visualization of VIATRA pattern matching results is concerned, the VIATRA framework provides two approaches:
@@ -15,7 +17,7 @@ VIATRA provides a simple data binding facility that can be used to bind pattern 
 
 === Required annotations
 
-* _@ObservableValue_: allows the developer to customize the appearance of a match. It defines an observable value (as defined in JFace Data Binding) which can be bound to an Eclipse/JFace UI. 
+* _@ObservableValue_: allows the developer to customize the appearance of a match. It defines an observable value (as defined in JFace Data Binding) which can be bound to an Eclipse/JFace UI.
 ** _name_ (String): the name of the parameter
 ** _expression_ (String): the attribute to be observed definition without '$' marks. For example `@ObservableValue(name = "id", expression = "host.identifier")`
 ** _labelExpression_: this annotation makes it possible to create observable string properties, which are useful when presenting relations between objects inside a JFace viewer component.
@@ -30,7 +32,7 @@ VIATRA provides a simple data binding facility that can be used to bind pattern 
 @ObservableValue(name = "current_ram", expression = "host.availableRam")
 @ObservableValue(name = "total_cpu", expression = "host.totalCpu")
 @ObservableValue(name = "total_hdd", expression = "host.totalHdd")
-@ObservableValue(name = "total_ram", expression = "host.totalRam") 
+@ObservableValue(name = "total_ram", expression = "host.totalRam")
 pattern hostInstances(host: HostInstance) {
 	HostInstance(host);
 }
@@ -63,7 +65,7 @@ ViewerSupport.bind(
 	//Get the matching results as an observable list
         ViatraObservables.observeMatchesAsList(matcher),
         //Specify observed proeprties
-        new IValueProperty[] { 
+        new IValueProperty[] {
 		adapter.getProperty("id"),
 		adapter.getProperty("node_ip"),
 		adapter.getProperty("current_cpu"),
@@ -99,14 +101,14 @@ ViewerSupport.bind(listViewer, ViatraObservables.observeMatchesAsSet(matcher), a
 IObservableValue dbUserTarget = WidgetProperties.text().observe(dbUser);
 IObservableValue dbPassTarget = WidgetProperties.text().observe(dbPass);
 
-//Observe the changes in the list selection        
+//Observe the changes in the list selection
 IViewerObservableValue listSelection = ViewerProperties
 	.singleSelection().observe(listViewer);
 
-//Use the data binding context to bind the text property of the target textbox and the given property of the matcher.    
+//Use the data binding context to bind the text property of the target textbox and the given property of the matcher.
 dataBindingContext.bindValue(
 	//Target textbox observable value
-	dbPassTarget, 
+	dbPassTarget,
 	//Get the source observable value from the adapter
 	adapter.getProperty("db_pass").observeDetail(listSelection),
 	//Define EMF update value strategy
@@ -114,7 +116,7 @@ dataBindingContext.bindValue(
 	new EMFUpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER),
 	new EMFUpdateValueStrategy());
 
-dataBindingContext.bindValue(dbUserTarget, adapter.getProperty("db_user").observeDetail(listSelection), 
+dataBindingContext.bindValue(dbUserTarget, adapter.getProperty("db_user").observeDetail(listSelection),
 	new EMFUpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER),
 	new EMFUpdateValueStrategy());
 ----
@@ -138,7 +140,7 @@ In order to use the VIATRA Viewers addon the following steps need to be undertak
 [[app-listing]]
 [source,java]
 ----
-//Host Type objects will be nodes of the displayed graph 
+//Host Type objects will be nodes of the displayed graph
 @Item(item = host, label = "$host.identifier$")
 //Format options can be set using the @Format annotation
 @Format(color = "#0033CC", textColor = "#FFFFFF")
@@ -146,7 +148,7 @@ pattern hostTypes(host) {
 	HostType(host);
 }
 //Host types contain host instances
-//Displayed as nodes which have common edges with their parents 
+//Displayed as nodes which have common edges with their parents
 @ContainsItem(container = type, item = instance)
 pattern connectTypesAndInstancesHost(type, instance) {
 	HostType.instances(type,instance);

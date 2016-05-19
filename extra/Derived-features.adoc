@@ -1,7 +1,9 @@
 = Derived features
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 ifndef::rootdir[:rootdir: ../]
-ifndef::source-highlighter[:source-highlighter: coderay]
+:source-highlighter: highlightjs
+:highlightjsdir: {rootdir}/highlight.js
+:highlightjs-theme: tomorrow
 :imagesdir: {rootdir}
 
 To define a derived feature in your EMF metamodel, you have set the following attributes of the feature:

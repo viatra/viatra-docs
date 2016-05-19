@@ -1,7 +1,9 @@
 = VIATRA EVM Barebone
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 ifndef::rootdir[:rootdir: ../]
-ifndef::source-highlighter[:source-highlighter: coderay]
+:source-highlighter: highlightjs
+:highlightjsdir: {rootdir}/highlight.js
+:highlightjs-theme: tomorrow
 :imagesdir: {rootdir}
 
 == Preparation of the transformation
@@ -151,7 +153,7 @@ Code for conflict set:
 // Check that there is any conflicting activation
 if(!ruleEngine.conflictingActivations.empty) {
 	// Create the conflict set
-	val conflictSet = ruleEngine.createScopedConflictSet(resolver, 
+	val conflictSet = ruleEngine.createScopedConflictSet(resolver,
 		// From filtered hostMapping rule and unfiltered appMapping
 		ImmutableMultimap.of(
 			hostMapping, matchFilter,

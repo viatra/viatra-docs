@@ -2,6 +2,9 @@
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :rootdir: .
 :imagesdir: {rootdir}/images
+:source-highlighter: highlightjs
+:highlightjsdir: {rootdir}/highlight.js
+:highlightjs-theme: tomorrow
 :toclevels: 2
 :toc:
 :toc2:

@@ -1,7 +1,9 @@
 = VIATRA Debugger
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 ifndef::rootdir[:rootdir: ../]
-ifndef::source-highlighter[:source-highlighter: coderay]
+:source-highlighter: highlightjs
+:highlightjsdir: {rootdir}/highlight.js
+:highlightjs-theme: tomorrow
 :imagesdir: {rootdir}
 
 == Debugging model transformations
@@ -35,7 +37,7 @@ image::extra/images/debug_adapter.png[Debug Adapter]
 ** _Rule Activation Breakpoints_: Contains references to a transformation rule, a lifecycle state, and a set of source model elements that have triggered the activation. This way the debugger can check if the activation being fired has a breakpoint attached to it or not.
 ** _Conditional Breakpoints_: These breakpoints are able to define global constraints that are not only affected by the current activation. A similar concept is available in the Eclipse Java Development Tools (JDT). The constraints are defined by using the VIATRA query language.
 * _Transformation Debugger Configuration_: This configuration binds the transformation debug adapter and listenercomponents together and allows a more straightforward usage.
-  
+
 
 === Manual conflict resolver adapter
 
@@ -60,7 +62,7 @@ image::extra/images/coder_adapter.png[Trace Coder Adapter]
 
 === Trace executor adapter
 
-This adapter is responsible for re-executing a transformation sequence recorded by the trace coder adapter. Particularly useful during debugging, as it allows the determinization of the otherwise random execution sequence of VIATRA event-driven transformations. 
+This adapter is responsible for re-executing a transformation sequence recorded by the trace coder adapter. Particularly useful during debugging, as it allows the determinization of the otherwise random execution sequence of VIATRA event-driven transformations.
 It operates the following way: as the transformation is being executed, the activation at hand is compared to the upcoming entry in a previously loaded transformation trace. If the activation matches the trace record, it is executed, if not the executor finds the matching one.
 
 .Transformation Trace Executor Adapter
@@ -72,4 +74,3 @@ Noteable information regarding the trace executor:
 
 * The usage of this adapter has a heavy effect on transformation performance, it is only advised to use it on small scale test models.
 * Also keep in mind that the trace executor needs an already existing transformation trace, hence it should not be used simultaneously with the trace coder.
-
