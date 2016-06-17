@@ -6,7 +6,7 @@ The CPS Demonstrator is specified to cover a usual workflow in Model-driven Engi
 
 [fig:cps-overview]
 .CPS Demonstrator overview
-image::wiki/images/overview.png[CPS Demonstrator overview]
+image::images/overview.png[CPS Demonstrator overview]
 
 === Domains
 
