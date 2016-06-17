@@ -31,11 +31,13 @@ Since manually creating large instance models requires a lot of effort, we devel
 The model generator aims to output models that are similar in **fine structure** but have different number of elements (to generate scaled-up models) and allow some **randomization** (e.g. to create state machines with different number of states for different application types).
 
 Randomization is controlled by min-max and percentage type parameters and ratio maps:
+
 * A **min-max** parameter specifies a range with a minimum and maximum value, while operations depending on the given parameter can obtain a random number that is part of the range (e.g. create statemachine with 5 to 10 states).
 * A **percentage** parameter specifies the fraction of a total, while operations may use it to decide how to distribute the choices for the possible elements (e.g. 35% of transitions in a state machine should have actions).
 * A **ratio map** parameter assigns integer values to classes, while operations may use it to distribute choices (e.g. how application instances are allocated to different host class instances).
 
 The fine structure is specified with host and application classes:
+
 * A **host class** determines how many host types are created (min-max), how many instances are created for each type in the class (min-max), how many other host instance each host instance communicates with (min-max) and how the communications are distributed among instances of different host classes (ratio map).
 * An **application class** determines how many application types are created (min-max), how many instances are created for each type in the class (min-max), how many states and transitions should the state machine of each type contain (both min-max), how many of the instances are allocated (percentage), how is the allocation distributed among instances of different host classes (ratio map), how many of the transitions should define actions (percentage) and of those what is the ratio of sends (percentage).
 
@@ -48,10 +50,12 @@ The [[CPS-to-Deployment|CPS-to-Deployment-Transformation]] model-to-model transf
 The transformation creates deployment hosts for each CPS host instance, then creates deployment applications in these hosts for all application instances allocated to the corresponding CPS host. Next, the state machine of the application type for each mapped application instance is mapped to a deployment behaviour of the deployment application. This includes creating states and transitions as well, although the two metamodels represent state machines an behaviours in a slightly different way. Finally, transition actions are processed and trigger references are created between behaviour transitions if the model structure and the actions are set up in a given way ([Step 6. in the specification](CPS-to-Deployment-Transformation=rules)).
 
 Implemented batch alternatives:
+
 * [[Simple and optimized Xtend|Simple-and-optimized-Xtend-batch-M2M-transformation]]
 * [[Xtend and EMF-IncQuery|Simple-Xtend-and-IncQuery-M2M-transformation]]
 
 Implemented incremental alternatives:
+
 * [[Explicit traceability|Explicit-traceability-M2M-transformation]]
 * [[Query result bookmarking|Query-result-traceability-M2M-transformation]]
 
@@ -60,11 +64,13 @@ Implemented incremental alternatives:
 The [[Deployment Code Generation|Code-Generator-(Distributed-realization,-Xtend-templates)]] model-to-text transformation takes a deployment model and outputs **Java code** that can simulate the dynamic behaviour of the system. Each host is executed on separate threads by **host runners**, while inter-host triggers are implemented by message passing through a simple **communication network** object. Once again, based on a single specification, multiple model-to-text alternatives can be provided, with incremental approaches re-generating only parts of the source code that are affected by deployment model changes. These changes are collected using a [[deployment change monitor|Deployment-change-monitor]], which uses EMF-IncQuery to **aggregate** low level deployment model **modifications** and **provide deltas** that specify the changed elements (hosts, applications, behaviours).
 
 The change monitor aggregates modifications into a delta between checkpoints. The API allows creating a new checkpoint and will provide the delta between the previous and newly created checkpoints, while it also starts to record the delta starting from the new checkpoint. The delta contains a boolean value to signify that the top-level configuration has to be re-generated and three sets of elements:
+
 * **Appeared** since the last checkpoint: source code related to these elements has to be generated, clean up not required
 * **Disappeared** since the last checkpoint: source code related to these elements should be cleaned up
 * **Updated** since the last breakpoint: source code related to these elements has to be re-generated, clean up may be needed (e.g. file name will change)
 
 The code generator creates source code fragments from elements of the deployment model, these include:
+
 * **Deployment** for creating the top level configuration that sets up host objects
 * **Host** for creating the code that sets the applications for a host
 * **Application** for creating code that sets up an application, with a current state
@@ -75,6 +81,7 @@ The generated code uses base classes that contain model-independent code and som
 === Testing
 
 Each component is tested independently with their own set of **unit tests**, while the complete workflow is tested by **integration tests**, both implemented in link:http://junit.org/[JUnit]. For those components that are planned to have multiple implementations, the unit tests are developed based on the specification of the component and each implementation is tested with the same set of tests.
+
 * [[Unit tests for the M2M transformation|CPS-to-Deployment-Unit-Tests]]
 
 === Performance evaluation
