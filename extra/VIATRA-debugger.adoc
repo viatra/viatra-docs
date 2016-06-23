@@ -164,42 +164,49 @@ image::extra\screenshots\VIATRA_debug_variables.png[Variables view]
 
 The VIATRA transformation debugger enables the transformation developer to control the execution sequence of the transformation under debugging. This can be done in the following ways:
 
-* Use Breakpoints and standard debug commands:
-** The Transformation debugger supports the following breakpoints:
-*** Activation breakpoint: Activation breakpoints can be toggled via selecting a rule activation and using the appropriate command on the _Adaptable Transformation Browser_ view.
-*** Rule Breakpoint: Rule breakpoints can be created via selecting an Adaptable EVM instance and using the appropriate UI element. Once this is done, the following dialog opens, on which the transformation developer can specify the name of the transformation rule. Once an activation is about to be executed, the debugger checks if the activation derives from the rule associated with the specified name. If this condition is true, the execution is halted.
+====== Use Breakpoints and standard debug commands:
+
+The Transformation debugger supports the following breakpoints:
+
+* _Activation breakpoint_: Activation breakpoints can be toggled via selecting a rule activation and using the appropriate command on the _Adaptable Transformation Browser_ view.
+* _Rule Breakpoint_: Rule breakpoints can be created via selecting an Adaptable EVM instance and using the appropriate UI element. Once this is done, the following dialog opens, on which the transformation developer can specify the name of the transformation rule. Once an activation is about to be executed, the debugger checks if the activation derives from the rule associated with the specified name. If this condition is true, the execution is halted.
+* _Conditional breakpoint_: These breakpoints allow the user to define VIATRA Query based conditions to halt the execution of the transformation. In order to create a conditional breakpoint, select an Adaptable EVM instance and use the appropriate command. Afterwards, a dialog window opens which allows the user to define VIATRA query patterns. The execution of the transformation is halted once the match set of the pattern changes.
 
 .Rule breakpoint definition dialog
 image::extra\screenshots\VIATRA_debug_cr_rule_brkp.png[Rule breakpoint definition]
 
-*** Conditional breakpoint: These breakpoints allow the user to define VIATRA Query based conditions to halt the execution of the transformation. In order to create a conditional breakpoint, select an Adaptable EVM instance and use the appropriate command. Afterwards, a dialog window opens which allows the user to define VIATRA query patterns. The execution of the transformation is halted once the match set of the pattern changes.
-
 .Conditional breakpoint definition dialog
 image::extra\screenshots\VIATRA_debug_cr_cond_brkp.png[Conditional breakpoint definition]
 
-**** IMPORTANT: This editor reuses the standard Xtext based VIATRA query editor, however in this case, package definitions should be omitted (as there is no enclosed Eclipse resource to the file). Furthermore, the definition can contain only one public pattern at this point, this restriction, however, does not apply to private patterns. This restriction is applied, because the conditional breakpoint listens to the changes in the match set of the public pattern defined this way.
+IMPORTANT: This editor reuses the standard Xtext based VIATRA query editor, however in this case, package definitions should be omitted (as there is no enclosed Eclipse resource to the file). Furthermore, the definition can contain only one public pattern at this point, this restriction, however, does not apply to private patterns. This restriction is applied, because the conditional breakpoint listens to the changes in the match set of the public pattern defined this way.
 
-*** NOTE: The rule and conditional breakpoints are persisted between individual transformation debug launches (A.K.A. double clicking adaptable EVM instances). Typically if there are more launches than one at present, the breakpoints are contained in a common breakpoint pool managed by the Eclipse Breakpoint Manager.
-*** NOTE: The breakpoints added are displayed in the _Breakpoints_ Eclipse Debug view. Which can be used to disable and remove these breakpoints.
+NOTE: The rule and conditional breakpoints are persisted between individual transformation debug launches (A.K.A. double clicking adaptable EVM instances). Typically if there are more launches than one at present, the breakpoints are contained in a common breakpoint pool managed by the Eclipse Breakpoint Manager.
+
+NOTE: The breakpoints added are displayed in the _Breakpoints_ Eclipse Debug view. Which can be used to disable and remove these breakpoints.
 
 .Transformation breakpoints in the Eclipse Breakpoints view
 image::extra\screenshots\VIATRA_debug_breakpoints_view.png[Eclipse Breakpoints view]
 
-** Supported Eclipse debug commands:
-*** Step Over (F6): If the transformation execution is halted, use this command the execute the next activation, and stop the execution again.
-*** Resume (F8): If the transformation execution is halted, use this command to continue the execution of the transformation until a breakpoint is hit.
-** Unsupported Eclipse debug commands (These features are not implemented yet, they will be added in the future):
-*** Step Return
-*** Step Into
-*** Terminate
-*** Suspend
-*** Disconnect
-** NOTE: In order to use the eclipse debug UI elements, select the Debug Stack trace representing the transformation:
+Supported Eclipse debug commands:
+* _Step Over (F6)_: If the transformation execution is halted, use this command the execute the next activation, and stop the execution again.
+* _Resume (F8)_: If the transformation execution is halted, use this command to continue the execution of the transformation until a breakpoint is hit.
+
+Unsupported Eclipse debug commands (These features are not implemented yet, they will be added in the future):
+* _Step Return_
+* _Step Into_
+* _Terminate_
+* _Suspend_
+* _Disconnect_
+
+NOTE: In order to use the eclipse debug UI elements, select the Debug Stack trace representing the transformation:
 
 .Selecting the transformation stack frame
 image::extra\screenshots\VIATRA_debug_selectthread.png[Select transformation stack frame]
 
-* Directly select the next transformation activation to be fired: The transformation debugger allows the user to define which activation should be executed next. In order to do this, select an activation and use the appropriate command to set it as the next activation to be executed.
+===== Directly select the next transformation activation to be fired
+The transformation debugger allows the user to define which activation should be executed next. In order to do this, select an activation and use the appropriate command to set it as the next activation to be executed.
+
+WARNING: The changes made this ways could produce unpredictable behavior in the model transformation (Overriding the defined priority could result in inconsistent model states). Use this feature cautiously.
 
 .Selecting the next activation
 image::extra\screenshots\VIATRA_debug_select_next.png[Select next activation]
