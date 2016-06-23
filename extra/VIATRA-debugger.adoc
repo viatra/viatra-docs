@@ -130,7 +130,8 @@ image::extra\screenshots\VIATRA_debug_newtransf_classsel.png[Class selection]
 .Debugger in its initialized state
 image::extra\screenshots\VIATRA_debug_newtransf_connected.png[Debugger initialized]
 
-===== Browse the transformation state
+
+===== Browsing the transformation state
 
 One of the main use-cases of the VIATRA transformation debugger, is to enable the transformation developer to observe the state of a VIATRA transformation at certain point in its execution sequence. This includes two main aspects:
 
