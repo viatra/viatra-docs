@@ -131,6 +131,7 @@ image::extra\screenshots\VIATRA_debug_newtransf_classsel.png[Class selection]
 image::extra\screenshots\VIATRA_debug_newtransf_connected.png[Debugger initialized]
 
 
+
 ===== Browsing the transformation state
 
 One of the main use-cases of the VIATRA transformation debugger, is to enable the transformation developer to observe the state of a VIATRA transformation at certain point in its execution sequence. This includes two main aspects:
@@ -156,6 +157,8 @@ The parameters of the next activation to be executed can be observed via the _Va
 
 .VIATRA transformation preconditions as Variables
 image::extra\screenshots\VIATRA_debug_variables.png[Variables view]
+
+
 
 ===== Control the transformation execution sequence
 
@@ -192,6 +195,7 @@ image::extra\screenshots\VIATRA_debug_breakpoints_view.png[Eclipse Breakpoints v
 *** Suspend
 *** Disconnect
 ** NOTE: In order to use the eclipse debug UI elements, select the Debug Stack trace representing the transformation:
+
 .Selecting the transformation stack frame
 image::extra\screenshots\VIATRA_debug_selectthread.png[Select transformation stack frame]
 
