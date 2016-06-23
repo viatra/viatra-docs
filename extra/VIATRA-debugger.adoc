@@ -85,11 +85,11 @@ As currently the debugger does not support inter-JVM communication, the transfor
 public class BatchTestHandler extends AbstractHandler {
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
-        final Job job = new Job("CPS batch job") {
+        final Job job = new Job(JOB_NAME) {
             protected IStatus run(IProgressMonitor monitor) {
                 // Load the CPS model
                 CPSModelInitializer init = new CPSModelInitializer();
-                CPSToDeployment cps2dep = init.loadModel("platform:/plugin/org.eclipse.viatra.examples.transformationdebugger/output/example.cyberphysicalsystem");
+                CPSToDeployment cps2dep = init.loadModel(SOURCE_MODEL_URI);
                 // Initialize CPS to Deployment Transformation
                 CPSTransformation transformation = new CPSBatchTransformation(cps2dep);
                 // Execute the transformation and observe the effects of the selected adapter
