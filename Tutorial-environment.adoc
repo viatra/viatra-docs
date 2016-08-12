@@ -23,6 +23,6 @@ image::screenshots/install2.png[Install window]
 
 For a faster installation, you may deselect the _Contact all update sites during install\..._ field, but then it is necessary to install the required _Xtext SDK_ manually.
 
-This tutorial relies on the CPS demonstrator example from https://github.com/IncQueryLabs/incquery-examples-cps (for a description of the example please consult https://github.com/IncQueryLabs/incquery-examples-cps/wiki).
+This tutorial relies on the CPS demonstrator example from https://git.eclipse.org/c/viatra/org.eclipse.viatra.examples.git/tree/cps (for a description of the example please consult https://github.com/viatra/viatra-docs/blob/master/cps/Home.adoc).
 
-This document assumes that the metamodels themselves are installed into the Eclipse instance. They are available from the p2 repository https://build.incquerylabs.com/jenkins/job/CPS-Demonstrator/lastSuccessfulBuild/artifact/releng/org.eclipse.viatra.examples.cps.update/target/repository/
+This document assumes that the metamodels themselves are installed into the Eclipse instance. They are available from the p2 repository https://build.incquerylabs.com/jenkins/job/CPS-Demonstrator/lastSuccessfulBuild/artifact/cps/releng/org.eclipse.viatra.examples.cps.update/target/repository/
