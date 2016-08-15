@@ -58,12 +58,12 @@ pattern emptyIpAddress(host: HostInstance) {
 +
 This pattern shows that the parameters can be typed immediately in the parameters list.
 
-. Create a validation query that checks if two hosts has the same IP:
+. Create a validation query that checks if two hosts have the same IP:
 +
 [[app-listing]]
 [source,vql]
 ----
-pattern sameIpAddress(host1, hist2, commonIp) {
+pattern sameIpAddress(host1, host2, commonIp) {
     HostInstance.nodeIp(host1, commonIp);
     HostInstance.nodeIp(host2, commonIp);
     host1!=host2;
