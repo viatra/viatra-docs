@@ -80,7 +80,7 @@ This pattern shows the `!=` (_not equal_) operator to select two different entit
 pattern ipFormatInvalid(host) {
     HostInstance.nodeIp(host,ip);
     check (
-        !name.matches("^[\\d\\.]+")
+        !ip.matches("^[\\d\\.]+")
     );
 }
 ----
