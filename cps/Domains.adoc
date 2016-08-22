@@ -1,8 +1,14 @@
 ## Cyber Physical System
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+ifndef::rootdir[:rootdir: ./]
+ifndef::source-highlighter[:source-highlighter: highlightjs]
+ifndef::highlightjsdir[:highlightjsdir: {rootdir}/highlight.js]
+ifndef::highlightjs-theme[:highlightjs-theme: tomorrow]
+:imagesdir: {rootdir}/images
 
 The CPS domain specifies application and host types and their instances, requests and requirements on applications and resource requirements of applications towards hosts. Application types have a state machine that describes their behavior through states and transitions. Finally, application instances can be allocated to host instances that can communicate with each other.
 
-![Cyber Physical System model Ecore diagram](images/cps_ecore.png)
+image::cps_ecore.png[Cyber Physical System model Ecore diagram]
 
 * Host instances have a unique node IP address.
 * Application instances have a unique identifier.
@@ -13,10 +19,10 @@ The CPS domain specifies application and host types and their instances, request
 
 In the deployment model, host instances contain the applications that are running on them, while each application has a behavior with states and transitions. The behavior has a current state and transitions may trigger other transitions when the triggered transition is waiting for the signal they are sending and the application type is correct.
 
-![Deployment model Ecore diagram](images/deployment_ecore.png)
+image::deployment_ecore.png[Deployment model Ecore diagram]
 
 ## Traceability
 
 The traceability model describes the correspondence between a CPS and a deployment model. The traceability is stored in a set of traces that refer to zero, one or multiple CPS and deployment elements.
 
-![Traceability model Ecore diagram](images/traceability_ecore.png)
+image::traceability_ecore.png[Traceability model Ecore diagram]
