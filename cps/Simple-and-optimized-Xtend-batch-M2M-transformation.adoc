@@ -1,10 +1,19 @@
-This is a pure Xtend implementation for the example transformation described in [CPS to Deployment Transformation](https://github.com/IncQueryLabs/incquery-examples-cps/wiki/CPS-to-Deployment-Transformation).
+# Simple and Optimized Xtend Batch M2M Transformation
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+ifndef::rootdir[:rootdir: ./]
+ifndef::source-highlighter[:source-highlighter: highlightjs]
+ifndef::highlightjsdir[:highlightjsdir: {rootdir}/highlight.js]
+ifndef::highlightjs-theme[:highlightjs-theme: tomorrow]
+:imagesdir: {rootdir}/images
+
+This is a pure Xtend implementation for the example transformation described in <<CPS-to-Deployment-Transformation#,CPS to Deployment Transformation>>.
 
 ## Introduction
 The basic idea for the batch transformations - both for the simple and optimized versions - is to programmatically traverse the model that is to be transformed and apply all the transformation rules where they are applicable. Model traversal is done by using only basic language concepts and without using any advanced technologies or complex frameworks.
 
 ## How does it work
 The basic concept of this batched transformation is to transform a CPS model to a complete deployment model. This solution doesn't support incremental transformation, only the whole model can be transformed, and it uses the following steps:
+
  * It receives a root element for a mapping model which connects a CPS model root and a Deployment model root. The initialization step is to clear all traces from the mapping model and to delete all deployment hosts, if there is any.
  * Iterates over every HostInstance in the CPS model using foreach and transforms each of them to DeploymentHosts. In every iteration DeploymentApplications are also created from ApplicationInstances (see next step) and added to the hosts' containments which are allocated to the host being processed.
  * For each ApplicationInstance a DeploymentApplication is created. If the ApplicationType of the ApplicationInstance refers to a StateMachine, a DeploymentBehavior is also added for the ApplicationInstance (see next step)
@@ -13,9 +22,11 @@ The basic concept of this batched transformation is to transform a CPS model to 
 
 ## Handling of 1-to-n mappings
 Mappings with 1-to-n multiplicity are created in the following cases
+
  * StateMachine - DeploymentBehavior
  * State - BehaviorState
  * Transition - BehaviorTransition
+ 
 This means that a trace is only created once for each of these CPS elements, and as the transformation advances the list of deployment elements of the trace might expand.
 
 ## Creation of triggers
@@ -30,8 +41,11 @@ The class for the transformation is an Xtend class named `CPS2DeploymentBatchTra
 xform = new CPS2DeploymentBatchTransformationSimple(cps2dep)
 xform.execute
 ```
+
 ## Optimized batch M2M transformation
+
 In order to speed up the Xtend based variant we also developed a so called optimized version (`CPS2DeploymentBatchTransformationOptimized`). It is based on the simple batch transformation, however, includes the following optimizations:
+
  * A caching mechanism that is to store the created traceability information for created model elements in map data structures (one map for both directions) to avoid traversal of traceability model. In case of BehaviorTransitions, the application type ID, action ID and HostInstance are also stored based on the CPS model for faster trigger creation. 
  * Code restructuring for better loop execution
   * When creating triggers, the data for the receiver behavior transition are obtained in the outer for loop instead of the inner for loop. 
