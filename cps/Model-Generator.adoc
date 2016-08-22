@@ -1,33 +1,37 @@
-The model generator component is able to generate `CyberPhysicalSystem` models with the specified properties.
-The generator is built on top of the [[PlanExecutor|Plan-Executor]] and implements specific plans, phases, operations, initializer and fragment objects. The generation process is based on pseudo-random actions which means the output is deterministic according to the input parameters.
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+ifndef::rootdir[:rootdir: ./]
+ifndef::source-highlighter[:source-highlighter: highlightjs]
+ifndef::highlightjsdir[:highlightjsdir: {rootdir}/highlight.js]
+ifndef::highlightjs-theme[:highlightjs-theme: tomorrow]
+:imagesdir: {rootdir}/images
 
-![ModelGenerator](images/modelgenerator.png)
+The model generator component is able to generate `CyberPhysicalSystem` models with the specified properties.
+The generator is built on top of the <<Plan-Executor#,PlanExecutor>> and implements specific plans, phases, operations, initializer and fragment objects. The generation process is based on pseudo-random actions which means the output is deterministic according to the input parameters.
+
+image:modelgenerator.png[ModelGenerator]
 
 Preferences of the model are declared in `ICPSConstraints` objects. The following constraints are available: 
 
 * It is able to define _Host_ and _Application Classes_ which specify constraints for `Host-` and `ApplicationTypes`. Each _HostClass_ contains the following attributes:
-    + Name: Name of the HostClass (important for the ids)
-    + HostTypes: Min-Max value of the instantiated `HostTypes` (the exact value is randomized between the min and max values)
-    + HostInstances: Min-Max value of the instantiated `HostInstances`. (the exact value is randomized separately for each `HostTypes` of the _HostClass_, between the min and max values)
-    + CommunicationLines: This min-max value specifies the number of accessible `HostInstances` (`communicateWith` attribute).
-
-    _ApplicationClass_ is defined with the following properties:
-    + Name: Name of the ApplicationClass (important for the ids)
-    + ApplicationTypes: in-Max value of the instantiated `ApplicationTypes` (the exact value randomized between the min and max values)
-    + ApplicationInstances: Min-Max value of the instantiated `ApplicationInstances`. (the exact value is randomized separately for each `ApplicationTypes` of the _ApplicationClass_, between the min and max values)
-    + States: Min-Max value of the instantiated `States`for each `StateMachine` of the `ApplicationType`
-    + Transitions: Min-Max value of the instantiated `Transitions` for each `StateMachine` of the `ApplicationType`
-    + PercentageOfAllocatedInstances: Probability of application allocation
-    + AllocationRatios: Describes the allocation ratio by _HostClasses_
-    + ProbabilityOfActionGeneration: probability of the action generation for `Transitions`
-    + ProbabilityOfSenAction: probability of generating _sendSignal_ action (other is the _wiatForSignal_)
- 
-
+** Name: Name of the HostClass (important for the ids)
+** HostTypes: Min-Max value of the instantiated `HostTypes` (the exact value is randomized between the min and max values)
+** HostInstances: Min-Max value of the instantiated `HostInstances`. (the exact value is randomized separately for each `HostTypes` of the _HostClass_, between the min and max values)
+** CommunicationLines: This min-max value specifies the number of accessible `HostInstances` (`communicateWith` attribute).
+* _ApplicationClass_ is defined with the following properties:
+** Name: Name of the ApplicationClass (important for the ids)
+** ApplicationTypes: in-Max value of the instantiated `ApplicationTypes` (the exact value randomized between the min and max values)
+** ApplicationInstances: Min-Max value of the instantiated `ApplicationInstances`. (the exact value is randomized separately for each `ApplicationTypes` of the _ApplicationClass_, between the min and max values)
+** States: Min-Max value of the instantiated `States`for each `StateMachine` of the `ApplicationType`
+** Transitions: Min-Max value of the instantiated `Transitions` for each `StateMachine` of the `ApplicationType`
+** PercentageOfAllocatedInstances: Probability of application allocation
+** AllocationRatios: Describes the allocation ratio by _HostClasses_
+** ProbabilityOfActionGeneration: probability of the action generation for `Transitions`
+** ProbabilityOfSenAction: probability of generating _sendSignal_ action (other is the _wiatForSignal_)
 * Number of the available signals is specified with Min-Max value
 
 ## CPS model generation plan
 
-![Plan of the CPS model generation](images/plan.png)
+image:plan.png[Plan of the CPS model generation]
 
 The CPS plan consists of seven phases and eight operations.
 
