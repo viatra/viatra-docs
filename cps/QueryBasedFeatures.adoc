@@ -10,7 +10,7 @@ ifndef::highlightjs-theme[:highlightjs-theme: tomorrow]
 
 Query-based features are link:https://wiki.eclipse.org/VIATRA/Addon/Query_Based_Features#Well-behaving_structural_features[well-behaving] derived features that are computed incrementally based on VIATRA Query patterns evaluated over the model and provide proper change notifications.
 
-NOTE: The query based features are currently not part of the metamodel!
+IMPORTANT: The query based features are currently not part of the metamodel!
 
 In the CPS model, the following features are query-based:
 
