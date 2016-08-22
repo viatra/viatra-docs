@@ -1,10 +1,12 @@
-## Cyber Physical System
+# Domains
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 ifndef::rootdir[:rootdir: ./]
 ifndef::source-highlighter[:source-highlighter: highlightjs]
 ifndef::highlightjsdir[:highlightjsdir: {rootdir}/highlight.js]
 ifndef::highlightjs-theme[:highlightjs-theme: tomorrow]
 :imagesdir: {rootdir}/images
+
+## Cyber Physical System
 
 The CPS domain specifies application and host types and their instances, requests and requirements on applications and resource requirements of applications towards hosts. Application types have a state machine that describes their behavior through states and transitions. Finally, application instances can be allocated to host instances that can communicate with each other.
 
