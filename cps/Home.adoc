@@ -101,3 +101,10 @@ Each component is tested independently with their own set of **unit tests**, whi
 === Performance evaluation
 
 For details on benchmarking with the demonstrator, see the link:https://github.com/viatra/viatra-cps-benchmark/wiki[VIATRA CPS Benchmark] wiki.
+
+=== Supplementary pages
+
+* <<Contributor-Guide#,Contributor's guide>>
+* <<Generate-CPS-models#,Generating example models>>
+* <<Incremental-Viewers#, VIATRA Viewers example>>
+* <<QueryBasedFeatures#, VIATRA Query driven derived feature example>>
