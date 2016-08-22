@@ -1,4 +1,4 @@
-# CPS-to-Deployment-Transformation
+# CPS-to-Deployment Transformation
 
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 ifndef::rootdir[:rootdir: ./]
