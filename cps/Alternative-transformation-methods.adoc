@@ -6,6 +6,7 @@ ifndef::highlightjs-theme[:highlightjs-theme: tomorrow]
 :imagesdir: {rootdir}/images
 
 We provide multiple implementations for the <<CPS-to-Deployment-Transformation#,CPS-to-Deployment M2M transformation>>. The variants differ from each other in at least one characteristics to support comparison and evaluation. Characteristics include:
+
 * execution mode (batch or incremental)
 * used technologies (Xtend, EMF-IncQuery, VIATRA, other transformation tools)
 * model traversal vs. event-driven transformation
@@ -44,9 +45,9 @@ For the incremental alternatives, a differentiating factor is the method to iden
  * Details <<Partial-batch-M2M-transformation#,here>
 1. Change-driven transformations  (`id = incr.cdt`)
  * dirty: EVM activation life-cycle
-1. VIATRA EMF-based [transformation API](http://wiki.eclipse.org/VIATRA/Transformation_API)  (`id = incr.viatra`)
+1. VIATRA EMF-based link:http://wiki.eclipse.org/VIATRA/Transformation_API[transformation API]  (`id = incr.viatra`)
  * Details <<VIATRA-transformation-API-based-QRT-MTM-transformation#,here>>
 
 ### Summary
 
-We currently implemented the above mentioned different variants (if you know EMF-IncQuery well you may argue that the LS based should be considered as a separate one :-) ) for this transformation and in the future might add some additional ones built on our technology stack. However, we would like to invite variants using other transformation tools. Since the demonstrator is open source, this may involve users of other tools or even submitted as a case to the [Transformation Tool Contest](http://www.transformation-tool-contest.eu/).
+We currently implemented the above mentioned different variants (if you know EMF-IncQuery well you may argue that the LS based should be considered as a separate one :-) ) for this transformation and in the future might add some additional ones built on our technology stack. However, we would like to invite variants using other transformation tools. Since the demonstrator is open source, this may involve users of other tools or even submitted as a case to the link:http://www.transformation-tool-contest.eu/[Transformation Tool Contest].
