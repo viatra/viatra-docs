@@ -8,13 +8,9 @@ ifndef::highlightjs-theme[:highlightjs-theme: foundation]
 :toclevels: 2
 :toc:
 :toc2:
-:numbered:
 :icons: font
 :chapterdir: .
-:sectnums:
-:sectnumlevels: 4
 :experimental:
-:sectlinks:
 
 
 :chapterdir: .
