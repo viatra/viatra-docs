@@ -52,7 +52,7 @@ The live validation can be demonstrated in the generated editor for CPS models:
   1. Open a CPS instance model (e.g. by importing the `cps.instances` project) in the generated editor
     * Right click on a `.cyberphysicalsystem` file in the _Package explorer_, `Open with -> CyberPhysicalSystem Model Editor`
   1. Initialize the validation
-    * Right click in the tree editor, `EMF-IncQuery Validation -> Initialize VIATRA Query Validators on Editor`
+    * Right click in the tree editor, `VIATRA Validation -> Initialize VIATRA Validators on Editor`
   1. Violations of constraints are displayed in the _Problems_ view
     * Double clicking the violation will set the selection of the editor to the location element
     * Changes in the model will update problem markers immediately
