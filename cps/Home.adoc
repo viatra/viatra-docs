@@ -66,7 +66,7 @@ The transformation creates deployment hosts for each CPS host instance, then cre
 Implemented batch alternatives:
 
 * <<Simple-and-optimized-Xtend-batch-M2M-transformation#,Simple and optimized Xtend>>
-* <<Simple-Xtend-and-IncQuery-M2M-transformation#,Xtend and EMF-IncQuery>>
+* <<Simple-Xtend-and-IncQuery-M2M-transformation#,Xtend and VIATRA Query>>
 
 Implemented incremental alternatives:
 
@@ -75,7 +75,7 @@ Implemented incremental alternatives:
 
 === Deployment Code Generation
 
-The <<Code-Generator-Distributed-realization-Xtend-templates#, Deployment Code Generation>> model-to-text transformation takes a deployment model and outputs **Java code** that can simulate the dynamic behaviour of the system. Each host is executed on separate threads by **host runners**, while inter-host triggers are implemented by message passing through a simple **communication network** object. Once again, based on a single specification, multiple model-to-text alternatives can be provided, with incremental approaches re-generating only parts of the source code that are affected by deployment model changes. These changes are collected using a <<Deployment-change-monitor#,deployment change monitor>>, which uses EMF-IncQuery to **aggregate** low level deployment model **modifications** and **provide deltas** that specify the changed elements (hosts, applications, behaviours).
+The <<Code-Generator-Distributed-realization-Xtend-templates#, Deployment Code Generation>> model-to-text transformation takes a deployment model and outputs **Java code** that can simulate the dynamic behaviour of the system. Each host is executed on separate threads by **host runners**, while inter-host triggers are implemented by message passing through a simple **communication network** object. Once again, based on a single specification, multiple model-to-text alternatives can be provided, with incremental approaches re-generating only parts of the source code that are affected by deployment model changes. These changes are collected using a <<Deployment-change-monitor#,deployment change monitor>>, which uses VIATRA Query to **aggregate** low level deployment model **modifications** and **provide deltas** that specify the changed elements (hosts, applications, behaviours).
 
 The change monitor aggregates modifications into a delta between checkpoints. The API allows creating a new checkpoint and will provide the delta between the previous and newly created checkpoints, while it also starts to record the delta starting from the new checkpoint. The delta contains a boolean value to signify that the top-level configuration has to be re-generated and three sets of elements:
 
