@@ -1,3 +1,11 @@
+# Simple Xtend and Query M2M transformation
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+ifndef::rootdir[:rootdir: ./]
+ifndef::source-highlighter[:source-highlighter: highlightjs]
+ifndef::highlightjsdir[:highlightjsdir: {rootdir}/highlight.js]
+ifndef::highlightjs-theme[:highlightjs-theme: tomorrow]
+:imagesdir: {rootdir}/images
+
 ## Introduction
 
 The idea behind this transformation variant is similar in concept to the [[simple Xtend batch|Simple-and-optimized-Xtend-batch-M2M-transformation]] variant. Traverse the model and transform the elements according to the specification. The main difference is the usage of EMF-IncQuery patterns in place of complex queries (e.g. finding send and wait signal pairs), making the transformation faster and more memory efficient.
