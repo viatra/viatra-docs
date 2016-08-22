@@ -1,6 +1,14 @@
+# CPS to Deployment Unit Tests
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+ifndef::rootdir[:rootdir: ./]
+ifndef::source-highlighter[:source-highlighter: highlightjs]
+ifndef::highlightjsdir[:highlightjsdir: {rootdir}/highlight.js]
+ifndef::highlightjs-theme[:highlightjs-theme: tomorrow]
+:imagesdir: {rootdir}/images
+
 The `xform.m2m.tests` project specifies a high number of test cases that are independent of transformation implementations and are created for allowing Test Driven Development of transformations based on the specification.
 
-The tests are grouped together into classes following the rules found in the specification of the [[CPS-to-Deployment|CPS-to-Deployment-Transformation]] transformation:
+The tests are grouped together into classes following the rules found in the specification of the <<CPS-to-Deployment-Transformation#,CPS-to-Deployment>> transformation:
 * HostMappingTest
 * ApplicationMappingTest
 * StateMachineMappingTest
