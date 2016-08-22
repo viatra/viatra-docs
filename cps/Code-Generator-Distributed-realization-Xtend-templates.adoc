@@ -1,4 +1,10 @@
 # Code Generator (Distributed realization, Xtend templates)
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+ifndef::rootdir[:rootdir: ./]
+ifndef::source-highlighter[:source-highlighter: highlightjs]
+ifndef::highlightjsdir[:highlightjsdir: {rootdir}/highlight.js]
+ifndef::highlightjs-theme[:highlightjs-theme: tomorrow]
+:imagesdir: {rootdir}/images
 
 The `org.eclipse.incquery.examples.cps.m2t.distributed.generator` project implements a basic model-to-text transformation. It is a basic template based generator written in _Xtend_ .
 
