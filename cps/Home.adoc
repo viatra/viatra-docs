@@ -66,7 +66,7 @@ The transformation creates deployment hosts for each CPS host instance, then cre
 Implemented batch alternatives:
 
 * <<Simple-and-optimized-Xtend-batch-M2M-transformation#,Simple and optimized Xtend>>
-* <<Simple-Xtend-and-IncQuery-M2M-transformation#,Xtend and VIATRA Query>>
+* <<Simple-Xtend-and-Query-M2M-transformation#,Xtend and VIATRA Query>>
 
 Implemented incremental alternatives:
 
