@@ -1,4 +1,16 @@
-Query-based features are [well-behaving](https://wiki.eclipse.org/EMFIncQuery/UserDocumentation/Query_Based_Features#Well-behaving_structural_features) derived features that are computed incrementally based on EMF-IncQuery patterns evaluated over the model and provide proper change notifications.
+# Query based features
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+ifndef::rootdir[:rootdir: ./]
+ifndef::source-highlighter[:source-highlighter: highlightjs]
+ifndef::highlightjsdir[:highlightjsdir: {rootdir}/highlight.js]
+ifndef::highlightjs-theme[:highlightjs-theme: tomorrow]
+:imagesdir: {rootdir}/images
+:experimental:
+:icons: font
+
+Query-based features are link:https://wiki.eclipse.org/VIATRA/Addon/Query_Based_Features#Well-behaving_structural_features[well-behaving] derived features that are computed incrementally based on VIATRA Query patterns evaluated over the model and provide proper change notifications.
+
+NOTE: The query based features are currently not part of the metamodel!
 
 In the CPS model, the following features are query-based:
 
@@ -6,6 +18,7 @@ In the CPS model, the following features are query-based:
 * `CyberPhysicalSystem.hostInstances` contains the list of the instances of all `HostTypes`.
 
 To see these query-based features in action, you can do the following:
+
 1. Open the example.cps or any CPS domain model in the generated tree editor in the Runtime Eclipse.
 2. Open the Properties view, if it is not open yet (right click in the editor and select `Show Properties view`).
 3. Select the root CyberPhysicalSystem element to see its properties.
