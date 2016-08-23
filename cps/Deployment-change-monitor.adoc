@@ -35,7 +35,7 @@ The rules used for monitoring:
  ** For any transition the list of triggered transitions are changed
 
 ## Usage
-The implementation class for the monitor is the ```org.eclipse.incquery.examples.cps.xform.m2t.DeploymentChangeMonitor``` Java class. To use it, an ViatraQueryEngine and a Deployment needed. 
+The implementation class for the monitor is the ```org.eclipse.viatra.query.examples.cps.xform.m2t.DeploymentChangeMonitor``` Java class. To use it, an ViatraQueryEngine and a Deployment needed. 
 ```
 engine = ViatraQueryEngine.on(deployment);
 monitor = new DeploymentChangeMonitor(deployment,engine);
