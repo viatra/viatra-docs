@@ -8,7 +8,7 @@ ifndef::highlightjs-theme[:highlightjs-theme: tomorrow]
 
 ## Introduction
 
-The idea behind this transformation variant is similar in concept to the <<Simple-Xtend-and-IncQuery-M2M-transformation#,Xtend and IncQuery batch>> variant. Traverse the model and transform the elements according to the specification using VIATRA Query patterns. The main difference is the usage of the VIATRA link:http://wiki.eclipse.org/VIATRA/Transformation_API[Batch Transformations and Statements API].
+The idea behind this transformation variant is similar in concept to the <<Simple-Xtend-and-Query-M2M-transformation#,Xtend and Query batch>> variant. Traverse the model and transform the elements according to the specification using VIATRA Query patterns. The main difference is the usage of the VIATRA link:http://wiki.eclipse.org/VIATRA/Transformation_API[Batch Transformations and Statements API].
 
 ## How does it work
 
