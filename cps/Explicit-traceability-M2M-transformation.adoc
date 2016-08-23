@@ -20,7 +20,7 @@ For each type in the CPS metamodel, we create several rules for identifying thei
 * **monitoredCPSElement**: match a _CPSElement_ that has complete trace
 * **deletedDeploymentElement**: match a _DeploymentElement_ that has a trace, but the related CPS element does not exist
 
-The naming convention of link:https://git.eclipse.org/c/viatra/org.eclipse.viatra.examples.git/tree/cps/transformations/org.eclipse.incquery.examples.cps.xform.m2m.incr.expl/src/org/eclipse/incquery/examples/cps/xform/m2m/incr/expl/rules[rules] that use these patterns is the following:
+The naming convention of link:https://git.eclipse.org/c/viatra/org.eclipse.viatra.examples.git/tree/cps/transformations/org.eclipse.viatra.query.examples.cps.xform.m2m.incr.expl/src/org/eclipse/viatra/query/examples/cps/xform/m2m/incr/expl/rules[rules] that use these patterns is the following:
 
 * **CPSElementMapping**: matches of _unmappedCPSElement_ pattern are processed to create corresponding elements in the deployment model (e.g. DeploymentApplication for ApplicationInstance) and the trace
 * **CPSElementUpdate**: matches of _monitoredCPSElement_ pattern are processed to monitor the _CPSElement_ and synchronize attribute changes (e.g. the IP of the host instance is changed)
@@ -50,7 +50,7 @@ Triggers are found in the CPS model by VIATRA Query patterns that evaluate the a
 ### API
 
 The API of the transformation is the following class:
-`CPS2DeploymentTransformation.xtend` (link:https://git.eclipse.org/c/viatra/org.eclipse.viatra.examples.git/tree/cps/transformations/org.eclipse.incquery.examples.cps.xform.m2m.incr.expl/src/org/eclipse/incquery/examples/cps/xform/m2m/incr/expl/CPS2DeploymentTransformation.xtend[source])
+`CPS2DeploymentTransformation.xtend` (link:https://git.eclipse.org/c/viatra/org.eclipse.viatra.examples.git/tree/cps/transformations/org.eclipse.viatra.query.examples.cps.xform.m2m.incr.expl/src/org/eclipse/viatra/query/examples/cps/xform/m2m/incr/expl/CPS2DeploymentTransformation.xtend[source])
 
 ### Usage example
 
