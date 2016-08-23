@@ -6,7 +6,7 @@ ifndef::highlightjsdir[:highlightjsdir: {rootdir}/highlight.js]
 ifndef::highlightjs-theme[:highlightjs-theme: tomorrow]
 :imagesdir: {rootdir}/images
 
-You can generate CPS models with `SampleModelGenerator` class of the `org.eclipse.incquery.examples.cps.generator.tests` project.
+You can generate CPS models with `SampleModelGenerator` class of the `org.eclipse.viatra.query.examples.cps.generator.tests` project.
 
 How to use it:
 
