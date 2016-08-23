@@ -49,7 +49,7 @@ The 1-to-n mappings are handled within a separate method called `addTraceOneToN`
 ## Class of the transformation
 
 The implementation of the transformation can be found in the following class:
-`CPS2DeploymentPartialBatchTransformationEiq.xtend`, which is located in the `org.eclipse.incquery.examples.cps.xform.m2m.incr.aggr` package.
+`CPS2DeploymentPartialBatchTransformationEiq.xtend`, which is located in the `org.eclipse.viatra.query.examples.cps.xform.m2m.incr.aggr` package.
 
 ## Summary
 
