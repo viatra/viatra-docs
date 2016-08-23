@@ -6,7 +6,7 @@ ifndef::highlightjsdir[:highlightjsdir: {rootdir}/highlight.js]
 ifndef::highlightjs-theme[:highlightjs-theme: tomorrow]
 :imagesdir: {rootdir}/images
 
-The `org.eclipse.incquery.examples.cps.m2t.distributed.generator` project implements a basic model-to-text transformation. It is a basic template based generator written in _Xtend_ .
+The `org.eclipse.viatra.query.examples.cps.m2t.distributed.generator` project implements a basic model-to-text transformation. It is a basic template based generator written in _Xtend_ .
 
 ## Deployment realization
 The generated Java code realizes a "_distributed_" `Deployment` model where `Hosts` are the base elements of the distribution. Each host is a separated entity which can be run on `HostRunner` (threads). Hosts can communicate with each other via the `CommunicationNetwork` shared object.
@@ -144,4 +144,4 @@ public enum BehaviorAlarmB implements State<BehaviorAlarmB> {
 }
 ```
 
-In addition to the generated code `org.eclipse.incquery.examples.cps.m2t.proto.distributed` project contains the shared part of the working code (_general_ package). Implementation of the CommunicationNetwork, the HostRunner, the BaseApplication, the BaseHost, State and the interfaces are placed there.
+In addition to the generated code `org.eclipse.viatra.query.examples.cps.m2t.proto.distributed` project contains the shared part of the working code (_general_ package). Implementation of the CommunicationNetwork, the HostRunner, the BaseApplication, the BaseHost, State and the interfaces are placed there.
