@@ -18,7 +18,7 @@ The detailed description of each variant can be found on their corresponding wik
 
 ### Variants
 
-These implementations will be created under the link:https://github.com/IncQueryLabs/incquery-examples-cps/tree/master/transformations[transformations] folder in the repository and under the `org.eclipse.incquery.examples.cps.xfrom.m2m.<id>` namespace.
+These implementations will be created under the link:https://git.eclipse.org/c/viatra/org.eclipse.viatra.examples.git/tree/cps/transformations[transformations] folder in the repository and under the `org.eclipse.viatra.query.examples.cps.xfrom.m2m.<id>` namespace.
 
 #### Batch 
 
