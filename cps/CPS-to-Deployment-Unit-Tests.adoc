@@ -74,7 +74,7 @@ def specificInputModel(){
   val testId = "specificInputModel"
   info("START TEST: " + testId)
   
-  val cpsUri = "file://my-cps-git-location/models/org.eclipse.incquery.examples.cps.instances/example.cyberphysicalsystem"
+  val cpsUri = "file://my-cps-git-location/models/org.eclipse.viatra.query.examples.cps.instances/example.cyberphysicalsystem"
   
   val cps2dep = prepareCPSModel(cpsUri)
   		
