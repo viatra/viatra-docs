@@ -25,8 +25,7 @@ pattern hostIpAddress(host: HostInstance, ip) {
     HostInstance.nodeIp(host,ip);
 }
 ----
-. Import instances project ```models\org.eclipse.viatra.examples.cps.instances``` from the link:https://git.eclipse.org/c/viatra/org.eclipse.viatra.examples.git/tree/cps/[CPS Git repository].
-. Load the query and the instance model to the **Query Explorer**.
+. Import instances project ```models\org.eclipse.viatra.examples.cps.instances``` from the link:https://git.eclipse.org/c/viatra/org.eclipse.viatra.examples.git/tree/cps/[CPS Git repository]. Note that this is **not** a Git repository URL, but a web interface; a repository url can be found in the bottom of the page.
 
 
 == Query Explorer
