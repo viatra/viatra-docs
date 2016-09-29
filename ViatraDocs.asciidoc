@@ -40,6 +40,11 @@ include::{chapterdir}/Viatra-query-lab.adoc[leveloffset=+1]
 
 <<<
 == Model Transformation Development
+
+For model transformation development a Java API is available, allowing seamless integration of the transformations into any Java applications. However, to enhance readability, we recommend using a higher-level JVM language, as it allows defining the transformation as an internal DSL of this host language.
+
+In this tutorial we rely on the link:https://eclipse.org/xtend/[Xtend language] to host the VIATRA transformation DSL, and we rely on its extension method and type inference support to reduce unnecessary elements. However, other JVM-based languages can also be used with similar efficiency (for an example in link:https://kotlinlang.org/[Kotlin] see https://gist.github.com/doczir/bfe95c470599c5b8e60b400b80f92ea2).
+
 include::{chapterdir}/Viatra-batch-transformations.adoc[leveloffset=+2]
 
 <<<
