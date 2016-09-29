@@ -8,15 +8,19 @@ ifndef::highlightjs-theme[:highlightjs-theme: tomorrow]
 
 This exercise heps the audience to create a simple event-driven transformation using the VIATRA Transformation API. The transformation will create (and then incrementally update while active) a deployment model based on a CPS model. The exercise also covers registering a menu command which initializes the transformation.
 
+Given the batch and event-driven transformations are really similar, this section focuses mainly on the differences; if required, consult the <<_batch_transformations,batch transformation tutorial>>.
+
 == Create transformation
 
-* Create VIATRA Query project
-** Create Queries:
-*** For source model
-+
+Specific patterns have to be defined for event-driven rules; note that there are small differences to the batch definitions, e.g. there is an additional pattern called _allocatedDeploymentApplication_.
+
 [[app-listing]]
 [source,vql]
 ----
+import "http://org.eclipse.viatra/model/cps"
+import "http://org.eclipse.viatra/model/deployment"
+import "http://org.eclipse.viatra/model/cps-traceability"
+
 pattern hostInstance(hostInstance) {
     HostInstance(hostInstance);
 }
@@ -29,13 +33,7 @@ pattern applicationInstance(appType, appInstance){
 pattern allocatedDeploymentApplication(depHost, depApp) {
     DeploymentHost.applications(depHost, depApp);
 }
-----
 
-*** For traceability model:
-+
-[[app-listing]]
-[source,vql]
-----
 pattern cps2depTrace(cps2dep, trace, cpsElement, depElement) {
     CPSToDeployment.traces(cps2dep, trace);
     CPS2DeploymentTrace.cpsElements(trace, cpsElement);
@@ -97,7 +95,7 @@ new(CPSToDeployment cps2dep, ViatraQueryEngine engine) {
 * Transformation will remain active until dispose is called (a `dispose` method is already generated)
 * Create a rule to create DeploymentHosts for each HostInstances
 ** The EventDrivenTransformationRuleFactory extension provides a builder API for rule definition
-** A viatra query pattern is used as precondition to the rule, which means the rule will be activated each time the given pattern changes allowing to update the output accordingly.
+** A VIATRA query pattern is used as precondition to the rule, which means the rule will be activated each time the given pattern changes allowing to update the output accordingly.
 +
 [[app-listing]]
 [source,java]

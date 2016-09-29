@@ -12,14 +12,14 @@ The exercise also covers registering a menu command which initializes the transf
 
 == Create transformation
 
-* Create VIATRA Query project
-** Create Queries:
-*** For source model:
-+
+For the transformation, we have to created a _VIATRA Query Project_ (the one from the <<_query_development,query development tutorial>> could also be reused), and create a new query file called _CpsXformM2M.vql_ to store the patterns we want to use in the transformation with the following contents:
+
 [[app-listing]]
 [source,vql]
 ----
 import "http://org.eclipse.viatra/model/cps"
+import "http://org.eclipse.viatra/model/deployment"
+import "http://org.eclipse.viatra/model/cps-traceability"
 
 pattern hostInstance(hostInstance : HostInstance) {
     HostInstance(hostInstance);
@@ -32,16 +32,10 @@ pattern applicationInstance(
     HostInstance.applications(_, appInstance);
     ApplicationType.instances(appType, appInstance);
 }
-----
 
-*** For traceability model:
-+
-[[app-listing]]
-[source,vql]
-----
-import "http://org.eclipse.viatra/model/deployment"
-import "http://org.eclipse.viatra/model/cps-traceability"
-
+/**
+ * Traceability link access
+ */
 pattern cps2depTrace(
     cps2dep : CPSToDeployment,
     trace : CPS2DeploymentTrace,
@@ -60,17 +54,18 @@ pattern cps2depTrace(
 .Model Transformation Wizard - Create new transformation
 image::screenshots/transformation_wizard.png[]
 
-*** Setup the name of the transformation and click Next
+** Setup the name of the transformation and click Next
 +
 .Model Transformation Wizard - Name of the new batch transformation
 image::screenshots/batch_transformation_wizard_name.png[]
 
-*** Setup the type of the transformation to _BatchTransformation_ and click Finish
+** Setup the type of the transformation to _BatchTransformation_ and click Finish
 +
 .Model Transformation Wizard - Type of the new transformation
 image::screenshots/batch_transformation_wizard_type.png[]
 
-** Register used, domain-specific APIs as extensions, common APIs for the batch transformation are already generated
+In the created file we have to register a few extension methods, more specifically for our used queries (```CpsXformM2m```, the same name the VQL file uses) and the EMF EPackages we want to refer (here the deployment and traceability packages). A few additional extension methods are already registered, e.g. transformation rule builder and model manipulation API.
+
 +
 [[app-listing]]
 [source,java]
