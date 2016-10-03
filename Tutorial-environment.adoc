@@ -7,7 +7,7 @@ ifndef::highlightjsdir[:highlightjsdir: {rootdir}/highlight.js]
 ifndef::highlightjs-theme[:highlightjs-theme: tomorrow]
 :imagesdir: {rootdir}
 
-The VIATRA website describes where to download VIATRA from: https://www.eclipse.org/viatra/downloads.php This tutorial was written for version 1.2 (released on 28th April 2016).
+The VIATRA website describes where to download VIATRA from: https://www.eclipse.org/viatra/downloads.php This tutorial was written for version 1.4 (released on 30th September 2016).
 
 VIATRA is available from the p2 repository at http://download.eclipse.org/viatra/updates/release
 
