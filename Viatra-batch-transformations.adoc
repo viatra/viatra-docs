@@ -112,7 +112,7 @@ val hostRule = createRule.precondition(HostInstanceMatcher.querySpecification) [
 [[app-listing]]
 [source,java]
 ----
-val hostRule = createRule.precondition(HostInstanceMatcher.querySpecification) [
+val hostRule = createRule.precondition(HostInstanceMatcher.querySpecification).action([
     val cpsHostInstance = it.hostInstance
     val nodeIp = cpsHostInstance.nodeIp
     println('''Mapping host with IP: «nodeIp»''')
@@ -129,7 +129,7 @@ val hostRule = createRule.precondition(HostInstanceMatcher.querySpecification) [
     ]
 
     println('''Mapped with IP: «nodeIp»''')
-]
+]).build
 ----
 
 * The rule which creates `DeploymentApplication` elements for `ApplicationInstance` objects, looks similar. It has to find the `DeploymentHost` created from the `HostInstance` to which the source `ApplicationInstance` is allocated, so it assumes the `hostRule` has already fired:
@@ -137,7 +137,7 @@ val hostRule = createRule.precondition(HostInstanceMatcher.querySpecification) [
 [[app-listing]]
 [source,java]
 ----
-val applicationRule = createRule.precondition(ApplicationInstanceMatcher.querySpecification) [
+val applicationRule = createRule.precondition(ApplicationInstanceMatcher.querySpecification).action([
     val cpsApplicationInstance = it.appInstance
     val appId = cpsApplicationInstance.identifier
     println('''Mapping application with ID: «appId»''')
@@ -157,7 +157,7 @@ val applicationRule = createRule.precondition(ApplicationInstanceMatcher.querySp
     ]
 
     println('''Mapped application with ID: «appId»''')
-]
+]).build
 ----
 
 * Implement the method which performs the transformation using the rules defined above:
