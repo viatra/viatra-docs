@@ -66,7 +66,6 @@ image::screenshots/batch_transformation_wizard_type.png[]
 
 In the created file we have to register a few extension methods, more specifically for our used queries (```CpsXformM2m```, the same name the VQL file uses) and the EMF EPackages we want to refer (here the deployment and traceability packages). A few additional extension methods are already registered, e.g. transformation rule builder and model manipulation API.
 
-+
 [[app-listing]]
 [source,java]
 ----
