@@ -48,7 +48,7 @@ For the incremental alternatives, a differentiating factor is the method to iden
 1. Change-driven transformations  (`id = incr.cdt`)
  * dirty: EVM activation life-cycle
 1. VIATRA EMF-based link:http://wiki.eclipse.org/VIATRA/Transformation_API[transformation API]  (`id = incr.viatra`)
- * Details <<VIATRA-Transformation-API-based-QRT-MTM-transformation#,here>>
+ * Details <<VIATRA-Transformation-API-based-QRT-MTM-Transformation#,here>>
 
 ### Summary
 
