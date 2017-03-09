@@ -27,7 +27,7 @@ These implementations will be created under the link:https://git.eclipse.org/c/v
 1. Xtend + VIATRA Query (`id = batch.eiq`)
   * Details <<Simple-Xtend-and-Query-M2M-transformation#,here>>
 1. VIATRA Batch API (`id = batch.viatra`)
-  * Details <<VIATRA-transformation-API-based-batch-M2M-transformation#,here>>
+  * Details <<VIATRA-Transformation-API-based-batch-M2M-transformation#,here>>
 
 #### Incremental
 
@@ -48,7 +48,7 @@ For the incremental alternatives, a differentiating factor is the method to iden
 1. Change-driven transformations  (`id = incr.cdt`)
  * dirty: EVM activation life-cycle
 1. VIATRA EMF-based link:http://wiki.eclipse.org/VIATRA/Transformation_API[transformation API]  (`id = incr.viatra`)
- * Details <<VIATRA-transformation-API-based-QRT-MTM-transformation#,here>>
+ * Details <<VIATRA-Transformation-API-based-QRT-MTM-transformation#,here>>
 
 ### Summary
 
